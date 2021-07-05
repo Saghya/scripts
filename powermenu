@@ -3,7 +3,7 @@
 function powermenu {
 	#options="Cancel\n Shutdown\n Restart\n Sleep\n Lock"
 	options="Cancel\nShutdown\nRestart\nSleep\nLock"
-	selected=$(echo -e $options | dmenu)
+	selected=$(echo -e $options | dmenu -l 5)
 	if   [[ $selected = "Shutdown" ]]; then poweroff
 	elif [[ $selected = "Restart"  ]]; then reboot
 	elif [[ $selected = "Sleep"    ]]; then systemctl suspend
