@@ -1,0 +1,18 @@
+#!/bin/sh
+
+VOLUME=$(pamixer --get-volume)
+
+[ $(pamixer --get-volume-human) == "muted" ] && echo "ﱝ " || 
+    ([ "$VOLUME" == 0 ] && echo "婢 ") || 
+if [ "$VOLUME" -lt 33 ]
+then
+	echo "奄 $VOLUME%"
+elif [ "$VOLUME" -lt 66 ] && [ "$VOLUME" -gt 32 ]
+then
+	echo "奔 $VOLUME%"
+else
+	echo "墳 $VOLUME%"
+fi
+
+[ "$VOLUME" -gt 100 ] && pactl set-sink-volume 0 100%
+

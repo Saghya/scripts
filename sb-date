@@ -1,0 +1,24 @@
+#!/bin/sh
+
+HOUR=$(date '+%I')
+CALENDAR=""
+
+case $HOUR in
+  "00") CLOCK="" ;;
+  "01") CLOCK="" ;;
+  "02") CLOCK="" ;;
+  "03") CLOCK="" ;;
+  "04") CLOCK="" ;;
+  "05") CLOCK="" ;;
+  "06") CLOCK="" ;;
+  "07") CLOCK="" ;;
+  "08") CLOCK="" ;;
+  "09") CLOCK="" ;;
+  "10") CLOCK="" ;;
+  "11") CLOCK="" ;;
+  "12") CLOCK="" ;;
+  *) CLOCK="" ;;
+esac
+
+printf "$CALENDAR $(date '+%b %d'), $CLOCK $(date '+%I:%M %p')" 
+
