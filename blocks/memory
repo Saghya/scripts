@@ -1,0 +1,4 @@
+#!/bin/sh
+
+awk '/^MemTotal/ { t=$2 } /^MemAvailable/ { a=$2 } END { printf "\x0c \x0b%d%%", (t - a) / t * 100 }' /proc/meminfo
+

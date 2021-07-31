@@ -3,5 +3,5 @@
 WIFI=$(< /sys/class/net/wlp0s20f3/operstate)
 UTP=$(< /sys/class/net/enp4s0/operstate)
 
-[[ "$UTP" == "up" ]] && printf " " || ( [[ "$WIFI" == "up" ]] && printf " " )
+[[ "$UTP" == "up" ]] && printf "\x0c \x0b" || ( [[ "$WIFI" == "up" ]] && printf "\x0c " )
 

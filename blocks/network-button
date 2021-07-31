@@ -1,6 +1,6 @@
 #!/bin/sh
 
-case $BUTTON in
+case $1 in
     1) networkmanager_dmenu ;;
     2) notify-send "$(iw dev wlp0s20f3 info | grep ssid | awk '{print $2}')" ;;
 esac

@@ -1,0 +1,29 @@
+#!/bin/sh
+
+VOLUME=$(pamixer --get-volume)
+PERCENT="%%"
+
+if [ $(pamixer --get-volume-human) == "muted" ]
+then
+    ICON="ﱝ"
+    VOLUME=""
+    PERCENT=""
+elif [ "$VOLUME" == 0 ]
+then
+    ICON="婢"
+    VOLUME=""
+    PERCENT=""
+elif [ "$VOLUME" -lt 33 ]
+then
+	ICON="奄"
+elif [ "$VOLUME" -lt 66 ] && [ "$VOLUME" -gt 32 ]
+then
+	ICON="奔"
+else
+	ICON="墳"
+fi
+
+[ "$VOLUME" -gt 100 ] && pactl set-sink-volume 0 100%
+
+printf "\x0c$ICON \x0b$VOLUME$PERCENT"
+
