@@ -34,7 +34,12 @@ case $1 in
     ;;
   down)
     # decrease the backlight by 5%
-    xbacklight -dec 5
+    if [[ $(get_brightness - 5) -le 5 ]]
+    then
+        xbacklight -set 5
+    else
+        xbacklight -dec 5
+    fi
     send_notification
     ;;
 esac

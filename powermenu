@@ -4,7 +4,7 @@ OPTIONS="Cancel\n Shutdown\nﰇ Reboot\n Sleep\n Lock"
 SELECTED=$(echo -e $OPTIONS | dmenu -l 5)
 
 case $SELECTED in
-    " Shutdown") poweroff ;;
+    " Shutdown") systemctl poweroff ;;
     "ﰇ Reboot") reboot ;;
     " Sleep") systemctl suspend ;;
     " Lock") dm-tool switch-to-greeter ;;
