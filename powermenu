@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 OPTIONS="Cancel\n Shutdown\nﰇ Reboot\n Sleep\n Lock"
-SELECTED=$(echo -e $OPTIONS | dmenu -l 5)
+SELECTED=$(echo -e "$OPTIONS" | dmenu -l 5)
 
 case $SELECTED in
     " Shutdown") systemctl poweroff ;;

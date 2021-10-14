@@ -1,14 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 
 VOLUME=$(pamixer --get-volume)
 PERCENT="%%"
 
-if [ $(pamixer --get-volume-human) == "muted" ]
+if [ "$(pamixer --get-volume-human)" = "muted" ]
 then
     ICON="ﱝ"
     VOLUME=""
     PERCENT=""
-elif [ "$VOLUME" == 0 ]
+elif [ "$VOLUME" = 0 ]
 then
     ICON="婢"
     VOLUME=""
@@ -16,7 +16,7 @@ then
 elif [ "$VOLUME" -lt 33 ]
 then
 	ICON="奄"
-elif [ "$VOLUME" -lt 66 ] && [ "$VOLUME" -gt 32 ]
+elif [ "$VOLUME" -lt 66 ]
 then
 	ICON="奔"
 else

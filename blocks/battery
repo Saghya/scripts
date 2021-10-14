@@ -1,23 +1,28 @@
-#!/bin/sh
+#!/bin/bash
 
-BAT=$(< /sys/class/power_supply/BAT0/capacity)
+read -r BAT < /sys/class/power_supply/BAT0/capacity
+read -r AC < /sys/class/power_supply/AC/online
 
-[ $(< /sys/class/power_supply/AC/online) == 1 ] && ICON="" ||
-	if  [ "$BAT" -gt 0 ] && [ "$BAT" -lt 13 ]
+if [ "$AC" = 1 ]
+then
+ICON=""
+else
+	if [ "$BAT" -lt 20 ]
 	then
 		ICON=" "
-	elif [ "$BAT" -gt 12 ] && [ "$BAT" -lt 38 ]
+	elif [ "$BAT" -lt 40 ]
 	then
 		ICON=" "
-	elif [ "$BAT" -gt 37 ] && [ "$BAT" -lt 63 ]
+	elif [ "$BAT" -lt 60 ]
 	then
 		ICON=" "
-	elif [ "$BAT" -gt 62 ] && [ "$BAT" -lt 88 ]
+	elif [ "$BAT" -lt 80 ]
 	then
         ICON=" "
 	else
 		ICON=" "
 	fi
+fi
 
 printf "\x0c$ICON \x0b$BAT%%"
 
