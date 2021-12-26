@@ -4,14 +4,21 @@ sudo pacman -S --needed base-devel xorg polkit dunst feh zsh zsh-autosuggestions
 
 # yay
 git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg -si
+
 # dotfiles
 git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+config checkout
+
 # dwm
 git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install
+
 # dwmblocks
 git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make && sudo make install
+
 # dmenu
 git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install
+
 # st
 git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install
 
