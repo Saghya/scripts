@@ -16,6 +16,7 @@ git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu 
 git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install
 
 yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono slock
+yay -S --needed ly && systemctl enable ly.service
 
 sudo /usr/share/xsessions/dwm.desktop < "[Desktop Entry]
 Encoding=UTF-8
@@ -26,6 +27,5 @@ Icon=dwm
 Type=XSession"
 
 # git clone --recurse-submodules https://github.com/nullgemm/ly.git ~/ly && cd ~/ly && make && sudo make install && systemctl enable ly.service
-yay -S --needed ly && systemctl enable ly.service
 
 chsh -s /usr/bin/zsh
