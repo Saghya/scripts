@@ -5,6 +5,10 @@ sudo pacman -S --needed base-devel xorg polkit dunst feh zsh zsh-autosuggestions
 # yay
 git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg -si
 
+# neovim-plug
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
 # dotfiles
 git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles
 /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
@@ -22,6 +26,8 @@ git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu 
 git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install
 
 yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono slock
+
+sudo touch /usr/share/xsessions/dwm.desktop
 
 sudo echo '[Desktop Entry]
 Encoding=UTF-8
