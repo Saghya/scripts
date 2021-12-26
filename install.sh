@@ -9,11 +9,11 @@ git clone https://aur.archlinux.org/yay.git /home/$name && cd /home/$name/yay &&
 # dotfiles
 git clone https://github.com/Saghya/dotfiles /home/$name/
 # dwm
-git clone https://github.com/Saghya/dwm /home/$name/.config && cd /home/$name/.config/dwm && make && make install
+git clone https://github.com/Saghya/dwm /home/$name/.config/dwm && cd /home/$name/.config/dwm && make && make install
 # dmenu
-git clone https://github.com/Saghya/dmenu /home/$name/.config && cd /home/$name/.config/dmenu && make && make install
+git clone https://github.com/Saghya/dmenu /home/$name/.config/dmenu && cd /home/$name/.config/dmenu && make && make install
 # st
-git clone https://github.com/Saghya/st /home/$name/.config && cd /home/$name/.config/st && make && make install
+git clone https://github.com/Saghya/st /home/$name/.config/st && cd /home/$name/.config/st && make && make install
 
 # yay -S pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono ly
 # sytemctl enable ly.service
