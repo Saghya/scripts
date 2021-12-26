@@ -1,6 +1,6 @@
 #/bin/sh
 
-sudo pacman -S --needed base-devel xorg polkit firefox dunst feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot vim neovim xbindkeys picom alacritty lxappearance arc-gtk-theme arc-icon-theme xterm ranger pcmanfm polkit pavucontrol exa
+sudo pacman -S --needed base-devel xorg polkit dunst feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot vim neovim xbindkeys picom alacritty lxappearance arc-gtk-theme arc-icon-theme xterm ranger pcmanfm polkit pavucontrol exa
 
 # yay
 git clone https://aur.archlinux.org/yay.git ~/ && cd ~/yay && makepkg -si
@@ -27,6 +27,6 @@ Type=XSession"
 
 chsh -s $(which zsh)
 
-git clone --recurse-submodules https://github.com/nullgemm/ly.git ~/ly && cd ~/ly && make && sudo make install && systemctl enable ly.service
-
+# git clone --recurse-submodules https://github.com/nullgemm/ly.git ~/ly && cd ~/ly && make && sudo make install && systemctl enable ly.service
+yay -S --needed ly && systemctl enable ly.service
 
