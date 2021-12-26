@@ -7,7 +7,7 @@ git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg -si
 
 # dotfiles
 git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles
-/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME checkout
+/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME checkout
 
 # dwm
 git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install
