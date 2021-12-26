@@ -29,13 +29,13 @@ yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono slock
 
 sudo mkdir /usr/share/xsessions
 sudo touch /usr/share/xsessions/dwm.desktop
-sudo echo '[Desktop Entry]
+echo '[Desktop Entry]
 Encoding=UTF-8
 Name=dwm
 Comment=Dynamic window manager
 Exec=startdwm
 Icon=dwm
-Type=XSession' > /usr/share/xsessions/dwm.desktop
+Type=XSession' | sudo tee /usr/share/xsessions/dwm.desktop
 
 yay -S --needed ly && systemctl enable ly.service
 
