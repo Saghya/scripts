@@ -27,6 +27,7 @@ git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make &
 
 yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono slock
 
+sudo mkdir /usr/share/xsessions
 sudo touch /usr/share/xsessions/dwm.desktop
 
 sudo echo '[Desktop Entry]
