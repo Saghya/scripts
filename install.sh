@@ -21,9 +21,11 @@ sudo /usr/share/xsessions/dwm.desktop < "[Desktop Entry]
 Encoding=UTF-8
 Name=dwm
 Comment=Dynamic window manager
-Exec=dwm
+Exec=startdwm
 Icon=dwm
 Type=XSession"
+
+chsh -s /usr/bin/zsh
 
 yay -S ly && sytemctl enable ly.service
 
