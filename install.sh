@@ -25,8 +25,8 @@ Exec=startdwm
 Icon=dwm
 Type=XSession"
 
-chsh -s /usr/bin/zsh
+chsh -s $(which zsh)
 
-git clone --recurse-submodules https://github.com/nullgemm/ly.git ~/ && cd ~/ly && make && sudo make install && systemctl enable ly.service
+git clone --recurse-submodules https://github.com/nullgemm/ly.git ~/ly && cd ~/ly && make && sudo make install && systemctl enable ly.service
 
 
