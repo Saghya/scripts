@@ -5,7 +5,7 @@ sudo pacman -S --needed base-devel xorg polkit dunst feh zsh zsh-autosuggestions
 # yay
 git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg -si
 # dotfiles
-git clone https://github.com/Saghya/dotfiles ~/.
+git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles
 # dwm
 git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install
 # dwmblocks
