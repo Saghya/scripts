@@ -5,7 +5,7 @@ sudo pacman -S --needed base-devel xorg polkit dunst feh zsh zsh-autosuggestions
 # yay
 git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg -si
 # dotfiles
-git clone https://github.com/Saghya/dotfiles ~/
+git clone https://github.com/Saghya/dotfiles ~/.
 # dwm
 git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install
 # dwmblocks
@@ -17,15 +17,5 @@ git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make &
 
 yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono slock
 yay -S --needed ly && systemctl enable ly.service
-
-sudo /usr/share/xsessions/dwm.desktop < "[Desktop Entry]
-Encoding=UTF-8
-Name=dwm
-Comment=Dynamic window manager
-Exec=startdwm
-Icon=dwm
-Type=XSession"
-
-# git clone --recurse-submodules https://github.com/nullgemm/ly.git ~/ly && cd ~/ly && make && sudo make install && systemctl enable ly.service
 
 chsh -s /usr/bin/zsh
