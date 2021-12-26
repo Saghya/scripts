@@ -27,5 +27,6 @@ Type=XSession"
 
 chsh -s /usr/bin/zsh
 
-yay -S ly && sytemctl enable ly.service
+git clone --recurse-submodules https://github.com/nullgemm/ly.git ~/ && cd ~/ly && make && sudo make install && systemctl enable ly.service
+
 
