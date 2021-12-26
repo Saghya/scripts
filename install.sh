@@ -1,6 +1,6 @@
 #/bin/sh
 
-sudo pacman -S --needed base-devel xorg polkit dunst feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot vim neovim xbindkeys picom alacritty lxappearance arc-gtk-theme arc-icon-theme xterm ranger pcmanfm polkit pavucontrol exa
+sudo pacman -S --needed base-devel xorg clang polkit dunst feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot vim neovim xbindkeys picom alacritty lxappearance arc-gtk-theme arc-icon-theme xterm ranger pcmanfm polkit pavucontrol exa
 
 # yay
 git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg -si
@@ -29,7 +29,6 @@ yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono slock
 
 sudo mkdir /usr/share/xsessions
 sudo touch /usr/share/xsessions/dwm.desktop
-
 sudo echo '[Desktop Entry]
 Encoding=UTF-8
 Name=dwm
