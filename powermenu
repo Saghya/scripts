@@ -1,13 +1,14 @@
 #!/bin/bash
 
-OPTIONS="Cancel\n Shutdown\nﰇ Reboot\n Sleep\n Lock"
-SELECTED=$(echo -e "$OPTIONS" | dmenu -l 5)
+OPTIONS="Cancel\n Shutdown\nﰇ Reboot\n Sleep\n Hibernate\n Lock"
+SELECTED=$(echo -e "$OPTIONS" | dmenu -l 6)
 
 case $SELECTED in
     " Shutdown") systemctl poweroff ;;
-    "ﰇ Reboot") reboot ;;
+    "ﰇ Reboot") systemctl reboot ;;
     " Sleep") systemctl suspend ;;
-    " Lock") dm-tool switch-to-greeter ;;
+    " Hibernate") systemctl hibernate ;;
+    " Lock") slock ;;
     *) return ;;
 esac
 
