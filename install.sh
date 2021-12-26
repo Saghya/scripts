@@ -22,6 +22,15 @@ git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu 
 git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install
 
 yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono slock
+
+sudo echo '[Desktop Entry]
+Encoding=UTF-8
+Name=dwm
+Comment=Dynamic window manager
+Exec=startdwm
+Icon=dwm
+Type=XSession' > /usr/share/xsessions/dwm.desktop
+
 yay -S --needed ly && systemctl enable ly.service
 
 chsh -s /usr/bin/zsh
