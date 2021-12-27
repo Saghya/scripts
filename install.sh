@@ -68,5 +68,5 @@ sudo systemctl enable ly.service
 # default shell
 chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors
 # relinking /bin/sh
-ln -sfT dash /usr/bin/sh || echo "Error relinking /bin/sh" >> ~/.install-errors
+sudo ln -sfT dash /usr/bin/sh || echo "Error relinking /bin/sh" >> ~/.install-errors
 
