@@ -19,8 +19,9 @@ git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg --nocon
     echo "Error installing yay" >> ~/.install-errors
 
 # neovim-plug
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' ||
+    echo "Error installing neovim-plug" >> ~/.install-errors
 
 # dotfiles
 git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles && /usr/bin/git --git-dir="$HOME"/.dotfiles/ \
@@ -62,6 +63,4 @@ done
 sudo systemctl enable ly.service
 
 chsh -s /usr/bin/zsh
-
-reboot
 
