@@ -15,8 +15,8 @@ done
 sudo sed -i "s/-j2/-j$(nproc)/;s/^#MAKEFLAGS/MAKEFLAGS/" /etc/makepkg.conf
 
 # yay
-git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg --noconfirm -si
-    || echo "Error installing yay" >> ~/.install-errors
+git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg --noconfirm -si ||
+    echo "Error installing yay" >> ~/.install-errors
 
 # neovim-plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs
@@ -27,21 +27,21 @@ git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles && /usr/bin/git 
     --work-tree="$HOME" checkout || echo "Error installing dotfiles" >> ~/.install-errors
 
 # dwm
-git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install
-    || echo "Error installing dwm" >> ~/.install-errors
+git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install ||
+    echo "Error installing dwm" >> ~/.install-errors
 
 # dwmblocks
-git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make
-    && sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks
-    || echo "Error installing dwmblocks" >> ~/.install-errors
+git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make &&
+    sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks ||
+    echo "Error installing dwmblocks" >> ~/.install-errors
 
 # dmenu
-git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install
-    || echo "Error installing dmenu" >> ~/.install-errors
+git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install ||
+    echo "Error installing dmenu" >> ~/.install-errors
 
 # st
-git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install
-    || echo "Error installing st" >> ~/.install-errors
+git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install ||
+    echo "Error installing st" >> ~/.install-errors
 
 # dwm login session
 sudo mkdir -p /usr/share/xsessions
