@@ -40,7 +40,19 @@ git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && mak
 
 # dwmblocks
 git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make &&
-    sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks ||
+    sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks && 
+    sed -i "$(( $(wc -l <~/.config/dwmblocks/config.def.h)-8+1 )),$ d" ~/.config/dwmblocks/config.def.h &&
+    echo "static Block blocks[] = {
+/*      pathu                           pathc                           interval        signal */
+        { PATH("volume"),               PATH("volume-button"),          0,              1},
+        { PATH("memory"),               PATH("memory-button"),          5,              2},
+        { PATH("cpu"),                  PATH("cpu-button"),             5,              3},
+        { PATH("battery"),              NULL,                          30,              4},
+        { PATH("network"),              PATH("network-button"),        15,              5},
+        { PATH("date"),                 NULL,                           5,              6},
+        { PATH("powermenu_icon"),       PATH("powermenu"),              0,              7},
+        { NULL } /* just to mark the end of the array */
+};" >> config.def.h && sudo make install ||
     echo "Error installing dwmblocks" >> ~/.install-errors
 
 # dmenu

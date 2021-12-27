@@ -1,13 +1,14 @@
 #!/bin/bash
 
-read -r WIFI < /sys/class/net/wlp0s20f3/operstate
-read -r UTP < /sys/class/net/enp4s0/operstate
+INTERFACE=$(ip route | awk '/^default via/ {print $5; exit}')
 
-if [ "$UTP" = "up" ]
+read -r STATE < /sys/class/net/"$INTERFACE"/operstate
+
+if [ "$STATE" = "up" ]
 then
-    printf "\x0c \x0b"
-elif [ "$WIFI" = "up" ]
-then
-    printf "\x0c " 
+    case "$INTERFACE" in
+        *enp*) printf "\x0c \x0b" ;;
+        *wla*) printf "\x0c \x0b"  ;;
+    esac
 fi
 
