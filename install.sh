@@ -7,10 +7,10 @@ sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/
 
 ## PACKAGES
 
-PCKGS="base-devel clang xorg xorg-xinit xclip xbindkeys polkit man-db pipewire pipewire-pulse pamixer pavucontrol 
+PCKGS="base-devel xorg xorg-xinit xclip xbindkeys polkit man-db pipewire pipewire-pulse pamixer pavucontrol 
     udiskie alacritty noto-fonts noto-fonts-emoji firefox libnotify dunst feh dash zsh zsh-autosuggestions
     zsh-syntax-highlighting scrot slock vim neovim picom lxappearance arc-gtk-theme arc-icon-theme ueberzug ranger
-    pcmanfm zathura zathura-pdf-mupdf exa ripgrep fd inetutils"
+    pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright"
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
 done
