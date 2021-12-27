@@ -1,6 +1,10 @@
 #/bin/sh
 
-sudo pacman -S --needed base-devel xorg clang polkit dunst feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot vim neovim xbindkeys picom alacritty lxappearance arc-gtk-theme arc-icon-theme xterm ranger pcmanfm polkit pavucontrol exa
+programs=(base-devel clang xorg xorg-xinit xclip xbindkeys man-db pipewire pipewire-pulse pamixer pavucontrol polkit dunst libnotify feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock vim neovim picom alacritty lxappearance arc-gtk-theme arc-icon-theme xterm ranger pcmanfm zathura zathura-pdf-mupdf exa ripgrep fd)
+
+for program in ${programs[@]}; do
+    sudo pacman -S --needed $program
+done
 
 # yay
 git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg -si
@@ -17,7 +21,7 @@ git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles
 git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install
 
 # dwmblocks
-git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make && sudo make install
+git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make && sudo make install && cp ~/.scripts/blocks ~/.config/dwmblocks/blocks
 
 # dmenu
 git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install
@@ -25,7 +29,7 @@ git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu 
 # st
 git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install
 
-yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono slock
+yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono htop-vim
 
 sudo mkdir /usr/share/xsessions
 sudo touch /usr/share/xsessions/dwm.desktop
@@ -40,3 +44,4 @@ Type=XSession' | sudo tee /usr/share/xsessions/dwm.desktop
 yay -S --needed ly && systemctl enable ly.service
 
 chsh -s /usr/bin/zsh
+
