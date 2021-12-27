@@ -25,7 +25,7 @@ git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles && /usr/bin/git 
 git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install || echo "Error installing dwm" >> ~/.install-errors
 
 # dwmblocks
-git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make && sudo make install && cp ~/.scripts/blocks ~/.config/dwmblocks/blocks || echo "Error installing dwmblocks" >> ~/.install-errors
+git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make && sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks || echo "Error installing dwmblocks" >> ~/.install-errors
 
 # dmenu
 git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install || echo "Error installing dmenu" >> ~/.install-errors
