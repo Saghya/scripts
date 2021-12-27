@@ -1,9 +1,9 @@
 #/bin/sh
 
-programs=(base-devel clang xorg xorg-xinit xclip xbindkeys man-db pipewire pipewire-pulse pamixer pavucontrol alacritty firefox polkit dunst libnotify feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock vim neovim picom lxappearance arc-gtk-theme arc-icon-theme ranger pcmanfm zathura zathura-pdf-mupdf exa ripgrep fd)
+PCKGS=(base-devel clang xorg xorg-xinit xclip xbindkeys man-db pipewire pipewire-pulse pamixer pavucontrol alacritty firefox polkit dunst libnotify feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock vim neovim picom lxappearance arc-gtk-theme arc-icon-theme ranger pcmanfm zathura zathura-pdf-mupdf exa ripgrep fd)
 
-for program in ${programs[@]}; do
-    sudo pacman --needed --noconfirm -S $program
+for PCKG in ${PCKGS[@]}; do
+    sudo pacman --needed --noconfirm -S $PCKG
 done
 
 # yay
@@ -29,8 +29,7 @@ git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu 
 # st
 git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install
 
-yay -S --needed pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono htop-vim
-
+# dwm login session
 sudo mkdir /usr/share/xsessions
 sudo touch /usr/share/xsessions/dwm.desktop
 echo '[Desktop Entry]
@@ -41,7 +40,14 @@ Exec=startdwm
 Icon=dwm
 Type=XSession' | sudo tee /usr/share/xsessions/dwm.desktop
 
-yay -S --needed ly && systemctl enable ly.service
+AUR_PCKGS=(pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono htop-vim ly)
+
+for PCKG in ${AUR_PCKGS[@]}; do
+    yay --needed --noconfirm -S $PCKG
+done
+systemctl enable ly.service
 
 chsh -s /usr/bin/zsh
+
+reboot
 
