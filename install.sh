@@ -41,9 +41,10 @@ git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && mak
 
 # dwmblocks
 git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make &&
-    sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks && sed -i '20d' config.h && 
+    sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks && sed -i '20,22d' config.h && 
     sed -i "$(( $(wc -l <~/.config/dwmblocks/config.h)-8+1 )),$ d" ~/.config/dwmblocks/config.h &&
     echo "static const char delimiter[] = { ' ', '|', ' ', DELIMITERENDCHAR };
+#include \"block.h\"
 static Block blocks[] = {
 /*      pathu                           pathc                           interval        signal */
         { PATH(\"volume\"),               PATH(\"volume-button\"),          0,              1},
