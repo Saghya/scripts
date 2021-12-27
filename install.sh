@@ -71,6 +71,6 @@ chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors
 sudo ln -sfT dash /usr/bin/sh || echo "Error relinking /bin/sh" >> ~/.install-errors
 
 # errors
-[-f ~/.install-errors ] && echo "######################
+[ -f ~/.install-errors ] && echo "######################
 ERRORS:" && cat ~/.install-errors && echo "######################"
 
