@@ -62,11 +62,6 @@ static Block blocks[] = {
 git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install ||
     echo "Error installing dmenu" >> ~/.install-errors.log
 
-# neovim-plug
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' ||
-       echo "Error installing neovim-plug" >> ~/.install-errors.log
-
 # dwm login session
 sudo mkdir -p /usr/share/xsessions
 sudo touch /usr/share/xsessions/dwm.desktop
