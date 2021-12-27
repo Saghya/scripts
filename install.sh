@@ -4,9 +4,10 @@
 sudo grep -q "ILoveCandy" /etc/pacman.conf || sudo sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
 sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/" /etc/pacman.conf
 
+# packages
 PCKGS="base-devel clang xorg xorg-xinit xclip xbindkeys polkit man-db pipewire pipewire-pulse pamixer pavucontrol 
-    udiskie alacritty firefox dunst libnotify feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock vim 
-    neovim picom lxappearance arc-gtk-theme arc-icon-theme ranger pcmanfm zathura zathura-pdf-mupdf exa ripgrep fd"
+    udiskie alacritty firefox dunst libnotify feh dash zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock
+    vim neovim picom lxappearance arc-gtk-theme arc-icon-theme ranger pcmanfm zathura zathura-pdf-mupdf exa ripgrep fd"
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors
 done
@@ -55,12 +56,17 @@ Exec=startdwm
 Icon=dwm
 Type=XSession' | sudo tee /usr/share/xsessions/dwm.desktop
 
-AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono htop-vim ly batsignal"
+# aur packages
+AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono htop-vim ly batsignal dashbinsh"
 for PCKG in $AUR_PCKGS; do
     yay --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors
 done
 
+# display manager
 sudo systemctl enable ly.service
 
-chsh -s /usr/bin/zsh
+# default shell
+chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors
+# relinking /bin/sh
+ln -sfT dash /usr/bin/sh || echo "Error relinking /bin/sh" >> ~/.install-errors
 
