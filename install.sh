@@ -45,13 +45,13 @@ git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd 
     sed -i "$(( $(wc -l <~/.config/dwmblocks/config.h)-8+1 )),$ d" ~/.config/dwmblocks/config.h &&
     echo "static Block blocks[] = {
 /*      pathu                           pathc                           interval        signal */
-        { PATH("volume"),               PATH("volume-button"),          0,              1},
-        { PATH("memory"),               PATH("memory-button"),          5,              2},
-        { PATH("cpu"),                  PATH("cpu-button"),             5,              3},
-        { PATH("battery"),              NULL,                          30,              4},
-        { PATH("network"),              PATH("network-button"),        15,              5},
-        { PATH("date"),                 NULL,                           5,              6},
-        { PATH("powermenu_icon"),       PATH("powermenu"),              0,              7},
+        { PATH(\"volume\"),               PATH(\"volume-button\"),          0,              1},
+        { PATH(\"memory\"),               PATH(\"memory-button\"),          5,              2},
+        { PATH(\"cpu\"),                  PATH(\"cpu-button\"),             5,              3},
+        { PATH(\"battery\"),              NULL,                          30,              4},
+        { PATH(\"network\"),              PATH(\"network-button\"),        15,              5},
+        { PATH(\"date\"),                 NULL,                           5,              6},
+        { PATH(\"powermenu_icon\"),       PATH(\"powermenu\"),              0,              7},
         { NULL } /* just to mark the end of the array */
 };" >> config.h && sudo make install ||
     echo "Error installing dwmblocks" >> ~/.install-errors.log
