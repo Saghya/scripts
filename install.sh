@@ -1,6 +1,6 @@
 #/bin/sh
 
-programs=(base-devel clang xorg xorg-xinit xclip xbindkeys man-db pipewire pipewire-pulse pamixer pavucontrol polkit dunst libnotify feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock vim neovim picom alacritty lxappearance arc-gtk-theme arc-icon-theme xterm ranger pcmanfm zathura zathura-pdf-mupdf exa ripgrep fd)
+programs=(base-devel clang xorg xorg-xinit xclip xbindkeys man-db pipewire pipewire-pulse pamixer pavucontrol alacritty firefox polkit dunst libnotify feh zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock vim neovim picom lxappearance arc-gtk-theme arc-icon-theme ranger pcmanfm zathura zathura-pdf-mupdf exa ripgrep fd)
 
 for program in ${programs[@]}; do
     sudo pacman -S --needed $program
