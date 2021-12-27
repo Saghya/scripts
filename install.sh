@@ -47,10 +47,6 @@ git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd 
 git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install ||
     echo "Error installing dmenu" >> ~/.install-errors
 
-# st
-git clone https://github.com/Saghya/st ~/.config/st && cd ~/.config/st && make && sudo make install ||
-    echo "Error installing st" >> ~/.install-errors
-
 # dwm login session
 sudo mkdir -p /usr/share/xsessions
 sudo touch /usr/share/xsessions/dwm.desktop
@@ -71,6 +67,7 @@ chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors
 sudo ln -sfT dash /usr/bin/sh || echo "Error relinking /bin/sh" >> ~/.install-errors
 
 # errors
-[ -f ~/.install-errors ] && echo "######################
+[ -f ~/.install-errors ] && echo "
+######################
 ERRORS:" && cat ~/.install-errors && echo "######################"
 
