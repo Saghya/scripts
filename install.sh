@@ -8,7 +8,7 @@ sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/
 ## PACKAGES
 
 PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xorg-xdpyinfo xorg-xbacklight
-    xclip xbindkeys man-db polkit acpid pipewire pipewire-pulse pavucontrol udiskie alacritty noto-fonts
+    xclip xdotool xbindkeys man-db polkit acpid pipewire pipewire-pulse pavucontrol udiskie alacritty noto-fonts
     noto-fonts-emoji firefox libnotify dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock
     vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme arc-icon-theme ueberzug ranger
     pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright tlp"
@@ -29,7 +29,7 @@ git clone https://aur.archlinux.org/yay-bin.git ~/.local/src/yay-bin && cd ~/.lo
     echo "Error installing yay" >> ~/.install-errors.log
 
 AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly
-    batsignal dashbinsh networkmanager-dmenu-git tlpui"
+    batsignal dashbinsh networkmanager-dmenu-git tlpui libinput-gestures"
 for PCKG in $AUR_PCKGS; do
     yay --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
 done
