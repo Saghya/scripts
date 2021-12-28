@@ -7,10 +7,11 @@ sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/
 
 ## PACKAGES
 
-PCKGS="base-devel xorg xorg-xinit xclip xbindkeys polkit man-db pipewire pipewire-pulse pamixer pavucontrol 
+PCKGS="base-devel man-db xorg xorg-xinit xclip xbindkeys polkit acpid pipewire pipewire-pulse pamixer pavucontrol 
     udiskie alacritty noto-fonts noto-fonts-emoji firefox libnotify dunst feh dash zsh zsh-autosuggestions
-    zsh-syntax-highlighting scrot slock vim neovim picom lxappearance arc-gtk-theme arc-icon-theme ueberzug ranger
-    pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright"
+    zsh-syntax-highlighting scrot slock vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra
+    arc-gtk-theme arc-icon-theme ueberzug ranger pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd 
+    clang pyright tlp"
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
 done
@@ -24,8 +25,8 @@ sudo sed -i "s/-j2/-j$(nproc)/;s/^#MAKEFLAGS/MAKEFLAGS/" /etc/makepkg.conf
 git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg --noconfirm -si ||
     echo "Error installing yay" >> ~/.install-errors.log
 
-AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono htop-vim ly batsignal dashbinsh
-    networkmanager-dmenu-git"
+AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly
+    batsignal dashbinsh networkmanager-dmenu-git tlpui"
 for PCKG in $AUR_PCKGS; do
     yay --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
 done
@@ -42,7 +43,7 @@ git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && mak
 
 # dwmblocks
 git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make &&
-    sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks && sed -i '20,22d' config.h && 
+    sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks && sed -i "20,22d" config.h && 
     sed -i "$(( $(wc -l <~/.config/dwmblocks/config.h)-8+1 )),$ d" ~/.config/dwmblocks/config.h &&
     echo "static const char delimiter[] = { ' ', '|', ' ', DELIMITERENDCHAR };
 #include \"block.h\"
@@ -63,16 +64,42 @@ static Block blocks[] = {
 git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install ||
     echo "Error installing dmenu" >> ~/.install-errors.log
 
+# touchpad
+sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf
+echo "Section "InputClass"
+    Identifier "devname"
+    Driver "libinput"
+    Option "Tapping" "on"
+    Option "NaturalScrolling" "true"
+EndSection" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf
+
+# acpi events
+sudo systemctl enable acpid.service || echo "Error enabling acpid.service" >> ~/.install-errors.log
+sudo touch /etc/acpi/events/jack &&
+echo "event=jack*
+action=pkill -RTMIN+1 dwmblocks" | sudo tee /etc/acpi/events/jack ||
+echo "Error creating jack event" >> ~/.install-errors.log
+sudo touch /etc/acpi/events/ac_adapter &&
+echo "event=ac_adapter
+action=pkill -RTMIN+4 dwmblocks" | sudo tee /etc/acpi/events/ac_adapter ||
+echo "Error creating ac_adapter event" >> ~/.install-errors.log
+
+# allow changing brightness for users in video group
+sudo touch /etc/udev/rules.d/backlight.rules &&
+echo "ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="acpi_video0", GROUP="video", MODE="0664"" | sudo tee /etc/udev/rules.d/backlight.rules ||
+echo "Error allowing brightness changing" >> ~/.install-erros.log
+
 # dwm login session
-sudo mkdir -p /usr/share/xsessions
-sudo touch /usr/share/xsessions/dwm.desktop
-echo '[Desktop Entry]
+sudo mkdir -p /usr/share/xsessions &&
+sudo touch /usr/share/xsessions/dwm.desktop &&
+echo "[Desktop Entry]
 Encoding=UTF-8
 Name=dwm
 Comment=Dynamic window manager
 Exec=startdwm
 Icon=dwm
-Type=XSession' | sudo tee /usr/share/xsessions/dwm.desktop
+Type=XSession" | sudo tee /usr/share/xsessions/dwm.desktop ||
+echo "Error creating dwm login session" >> ~/.install-errors.log
 
 # display manager
 sudo systemctl enable ly.service || echo "Error enabling display manager" >> ~/.install-errors.log

@@ -7,8 +7,8 @@ read -r STATE < /sys/class/net/"$INTERFACE"/operstate
 if [ "$STATE" = "up" ]
 then
     case "$INTERFACE" in
-        *enp*) printf "\x0c \x0b" ;;
-        *wla*) printf "\x0c \x0b"  ;;
+        *en*) printf "\x0c \x0b" ;;
+        *wl*) printf "\x0c \x0b"  ;;
     esac
 fi
 
