@@ -24,7 +24,8 @@ sudo sed -i "s/-j2/-j$(nproc)/;s/^#MAKEFLAGS/MAKEFLAGS/" /etc/makepkg.conf
 git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg --noconfirm -si ||
     echo "Error installing yay" >> ~/.install-errors.log
 
-AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono htop-vim ly batsignal dashbinsh"
+AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono htop-vim ly batsignal dashbinsh
+    networkmanager-dmenu-git"
 for PCKG in $AUR_PCKGS; do
     yay --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
 done
