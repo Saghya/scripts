@@ -89,7 +89,7 @@ echo "Error creating ac_adapter event" >> ~/.install-errors.log
 
 # allow changing brightness for users in video group
 sudo touch /etc/udev/rules.d/backlight.rules &&
-echo "ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="acpi_video0", GROUP="video", MODE="0664"" |
+echo "ACTION==\"add\", SUBSYSTEM==\"backlight\", KERNEL==\"acpi_video0\", GROUP=\"video\", MODE=\"0664\"" |
 sudo tee /etc/udev/rules.d/backlight.rules ||
 echo "Error allowing brightness changing" >> ~/.install-erros.log
 
