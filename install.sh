@@ -19,10 +19,13 @@ done
 # Use all cores for compilation.
 sudo sed -i "s/-j2/-j$(nproc)/;s/^#MAKEFLAGS/MAKEFLAGS/" /etc/makepkg.conf
 
+# directory for source files
+mkdir -p ~/.local/src
+
 ## AUR PACKAGES
 
 # yay
-git clone https://aur.archlinux.org/yay.git ~/yay && cd ~/yay && makepkg --noconfirm -si ||
+git clone https://aur.archlinux.org/yay-bin.git ~/.local/src/yay-bin && cd ~/.local/src/yay-bin && makepkg --noconfirm -si ||
     echo "Error installing yay" >> ~/.install-errors.log
 
 AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly
@@ -34,17 +37,17 @@ done
 ## GIT PACKAGES
 
 # dotfiles
-git clone --bare https://github.com/Saghya/dotfiles ~/.dotfiles && /usr/bin/git --git-dir="$HOME"/.dotfiles/ \
+git clone --bare https://github.com/Saghya/dotfiles ~/.local/dotfiles && /usr/bin/git --git-dir="$HOME"/.local/dotfiles/ \
     --work-tree="$HOME" checkout || echo "Error installing dotfiles" >> ~/.install-errors.log
 
 # dwm
-git clone https://github.com/Saghya/dwm ~/.config/dwm && cd ~/.config/dwm && make && sudo make install ||
+git clone https://github.com/Saghya/dwm ~/.local/src/dwm && cd ~/.local/src/dwm && make && sudo make install ||
     echo "Error installing dwm" >> ~/.install-errors.log
 
 # dwmblocks
-git clone https://github.com/ashish-yadav11/dwmblocks ~/.config/dwmblocks && cd ~/.config/dwmblocks && make &&
-    sudo make install && cp ~/.scripts/blocks/* ~/.config/dwmblocks/blocks && sed -i "20,22d" config.h && 
-    sed -i "$(( $(wc -l <~/.config/dwmblocks/config.h)-8+1 )),$ d" ~/.config/dwmblocks/config.h &&
+git clone https://github.com/ashish-yadav11/dwmblocks ~/.local/src/dwmblocks && cd ~/.local/src/dwmblocks && make &&
+    sudo make install && cp ~/.local/scripts/blocks/* ~/.local/src/dwmblocks/blocks && sed -i "20,22d" config.h && 
+    sed -i "$(( $(wc -l <~/.local/src/dwmblocks/config.h)-8+1 )),$ d" ~/.local/src/dwmblocks/config.h &&
     echo "static const char delimiter[] = { ' ', '|', ' ', DELIMITERENDCHAR };
 #include \"block.h\"
 static Block blocks[] = {
@@ -61,7 +64,7 @@ static Block blocks[] = {
     echo "Error installing dwmblocks" >> ~/.install-errors.log
 
 # dmenu
-git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu && make && sudo make install ||
+git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu && cd ~/.local/src/dmenu && make && sudo make install ||
     echo "Error installing dmenu" >> ~/.install-errors.log
 
 # touchpad
