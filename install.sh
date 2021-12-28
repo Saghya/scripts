@@ -66,11 +66,11 @@ git clone https://github.com/Saghya/dmenu ~/.config/dmenu && cd ~/.config/dmenu 
 
 # touchpad
 sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf
-echo "Section "InputClass"
-    Identifier "devname"
-    Driver "libinput"
-    Option "Tapping" "on"
-    Option "NaturalScrolling" "true"
+echo "Section \"InputClass\"
+    Identifier \"devname\"
+    Driver \"libinput\"
+    Option \"Tapping\" \"on\"
+    Option \"NaturalScrolling\" \"true\"
 EndSection" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf
 
 # acpi events
