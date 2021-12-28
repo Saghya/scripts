@@ -45,8 +45,8 @@ git clone https://github.com/Saghya/dwm ~/.local/src/dwm && cd ~/.local/src/dwm 
     echo "Error installing dwm" >> ~/.install-errors.log
 
 # dwmblocks
-git clone https://github.com/ashish-yadav11/dwmblocks ~/.local/src/dwmblocks && cd ~/.local/src/dwmblocks && make &&
-    sudo make install && cp ~/.local/scripts/blocks/* ~/.local/src/dwmblocks/blocks && sed -i "20,22d" config.h && 
+git clone https://github.com/ashish-yadav11/dwmblocks ~/.local/src/dwmblocks && cd ~/.local/src/dwmblocks &&
+    cp -r ~/.local/scripts/blocks ~/.local/src/dwmblocks && make && sudo make install && sed -i "20,22d" config.h && 
     sed -i "$(( $(wc -l <~/.local/src/dwmblocks/config.h)-8+1 )),$ d" ~/.local/src/dwmblocks/config.h &&
     echo "static const char delimiter[] = { ' ', '|', ' ', DELIMITERENDCHAR };
 #include \"block.h\"
