@@ -7,11 +7,11 @@ sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/
 
 ## PACKAGES
 
-PCKGS="base-devel man-db xorg xorg-xinit xclip xbindkeys polkit acpid pipewire pipewire-pulse pamixer pavucontrol 
-    udiskie alacritty noto-fonts noto-fonts-emoji firefox libnotify dunst feh dash zsh zsh-autosuggestions
-    zsh-syntax-highlighting scrot slock vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra
-    arc-gtk-theme arc-icon-theme ueberzug ranger pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd 
-    clang pyright tlp"
+PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xclip xorg-xdpyinfo xorg-xbacklight xbindkeys
+    man-db polkit acpid pipewire pipewire-pulse pamixer pavucontrol udiskie alacritty noto-fonts noto-fonts-emoji
+    firefox libnotify dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting scrot slock vim neovim picom
+    lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme arc-icon-theme ueberzug ranger pcmanfm zathura
+    zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright tlp"
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
 done
@@ -86,7 +86,8 @@ echo "Error creating ac_adapter event" >> ~/.install-errors.log
 
 # allow changing brightness for users in video group
 sudo touch /etc/udev/rules.d/backlight.rules &&
-echo "ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="acpi_video0", GROUP="video", MODE="0664"" | sudo tee /etc/udev/rules.d/backlight.rules ||
+echo "ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="acpi_video0", GROUP="video", MODE="0664"" |
+sudo tee /etc/udev/rules.d/backlight.rules ||
 echo "Error allowing brightness changing" >> ~/.install-erros.log
 
 # dwm login session
