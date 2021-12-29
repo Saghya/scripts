@@ -123,7 +123,7 @@ chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors
 sudo ln -sfT dash /usr/bin/sh || echo "Error relinking /bin/sh" >> ~/.install-errors.log
 
 # errors
-[ -f ~/.install-errors.log ] && echo "\033[1;31m
+[ -f ~/.install-errors.log ] && echo "
 ######################
-ERRORS:" && cat ~/.install-errors.log && echo "######################\033[0m"
+ERRORS:" && cat ~/.install-errors.log && echo "######################"
 
