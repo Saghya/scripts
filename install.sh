@@ -113,7 +113,7 @@ Type=XSession" | sudo tee /usr/share/xsessions/dwm.desktop ||
 sudo systemctl enable ly.service &&
 echo "term_reset_cmd = /usr/bin/tput reset; /usr/bin/printf '%b' '\e]P0222430\e]P769a2ff\ec'" |
 sudo tee /etc/ly/config.ini &&
-sudo sed -i "8i ExecStartPre=/usr/bin/printf '%%b' '\\e]P0222430\\e]P769a2ff\\ec'" /lib/systemd/system/ly.service ||
+sudo sed -i "8i ExecStartPre=/usr/bin/printf '%%b' '\\\e]P0222430\\\e]P769a2ff\\\ec'" /lib/systemd/system/ly.service ||
     echo "Error installing display manager" >> ~/.install-errors.log
 
 # default shell
