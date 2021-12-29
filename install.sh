@@ -115,7 +115,7 @@ echo "term_reset_cmd = /usr/bin/tput reset; /usr/bin/printf '%b' '\e]P0222430\e]
 sudo tee /etc/ly/config.ini &&
 if [ "$(sed "8q;d" /lib/systemd/system/ly.service)" != "ExecStartPre=/usr/bin/printf '%%b' '\e]P0222430\e]P769a2ff\ec'" ]; then
     sudo sed -i "8i ExecStartPre=/usr/bin/printf '%%b' '\\\e]P0222430\\\e]P769a2ff\\\ec'" /lib/systemd/system/ly.service
-fi || echo "Error installing display manager" ~/.install-errors.log
+fi
 
 # default shell
 chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors.log
