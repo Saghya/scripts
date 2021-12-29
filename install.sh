@@ -69,7 +69,7 @@ git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu && cd ~/.local/src/
 
 # grub-theme
 git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes
-sudo .local/src/grub2-themes/install.sh -b -t tela
+sudo ~/.local/src/grub2-themes/install.sh -b -t tela
 
 # touchpad
 sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf &&
