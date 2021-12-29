@@ -67,6 +67,10 @@ static Block blocks[] = {
 git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu && cd ~/.local/src/dmenu && make && sudo make install ||
     echo "Error installing dmenu" >> ~/.install-errors.log
 
+# grub-theme
+git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/ && sudo .local/src/grub2-themes/install.sh -b -t tela ||
+echo "Error installing grub-theme" >> ~/.install-errors.log
+
 # touchpad
 sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf &&
 echo "Section \"InputClass\"
