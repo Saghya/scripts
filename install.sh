@@ -113,7 +113,7 @@ Type=XSession" | sudo tee /usr/share/xsessions/dwm.desktop ||
 sudo systemctl enable ly.service &&
 echo "term_reset_cmd = /usr/bin/tput reset; /usr/bin/printf '%b' '\e]P0222430\e]P769a2ff\ec'" |
 sudo tee /etc/ly/config.ini &&
-if [ ($(sed "8q;d" /lib/systemd/system/ly.service) != "ExecStartPre=/usr/bin/printf '%%b' '\e]P0222430\e]P769a2ff\ec'") ]; then
+if [ $(sed "8q;d" /lib/systemd/system/ly.service) != "ExecStartPre=/usr/bin/printf '%%b' '\e]P0222430\e]P769a2ff\ec'" ]; then
     sudo sed -i "8i ExecStartPre=/usr/bin/printf '%%b' '\\\e]P0222430\\\e]P769a2ff\\\ec'" /lib/systemd/system/ly.service
 fi
 
