@@ -68,7 +68,7 @@ git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu && cd ~/.local/src/
     echo "Error installing dmenu" >> ~/.install-errors.log
 
 # grub-theme
-git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/ && sudo .local/src/grub2-themes/install.sh -b -t tela ||
+git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes && sudo .local/src/grub2-themes/install.sh -b -t tela ||
 echo "Error installing grub-theme" >> ~/.install-errors.log
 
 # touchpad
