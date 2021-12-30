@@ -52,7 +52,7 @@ echo "static const char delimiter[] = { ' ', '|', ' ', DELIMITERENDCHAR };
 #include \"block.h\"
 static Block blocks[] = {
 /*      pathu                           pathc                           interval        signal */
-        { PATH(\"volume\"),               PATH(\"volume-button\"),          0,              1},
+        { PATH(\"volume\"),               PATH(\"volume-button\"),          1,              1},
         { PATH(\"memory\"),               PATH(\"memory-button\"),          5,              2},
         { PATH(\"cpu\"),                  PATH(\"cpu-button\"),             5,              3},
         { PATH(\"battery\"),              NULL,                          30,              4},
