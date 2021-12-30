@@ -67,6 +67,10 @@ static Block blocks[] = {
 git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu && cd ~/.local/src/dmenu && make && sudo make install ||
     echo "Error installing dmenu" >> ~/.install-errors.log
 
+# grub-theme
+git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes
+sudo ~/.local/src/grub2-themes/install.sh -b -t tela
+
 # touchpad
 sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf &&
 echo "Section \"InputClass\"
@@ -110,8 +114,9 @@ Type=XSession" | sudo tee /usr/share/xsessions/dwm.desktop ||
 sudo systemctl enable ly.service &&
 echo "term_reset_cmd = /usr/bin/tput reset; /usr/bin/printf '%b' '\e]P0222430\e]P769a2ff\ec'" |
 sudo tee /etc/ly/config.ini &&
-sudo sed -i "8i ExecStartPre=/usr/bin/printf '%%b' '\e]P0222430\e]P769a2ff\ec'" /lib/systemd/system/ly.service ||
-    echo "Error installing display manager" >> ~/.install-errors.log
+if [ "$(sed "8q;d" /lib/systemd/system/ly.service)" != "ExecStartPre=/usr/bin/printf '%%b' '\e]P0222430\e]P769a2ff\ec'" ]; then
+    sudo sed -i "8i ExecStartPre=/usr/bin/printf '%%b' '\\\e]P0222430\\\e]P769a2ff\\\ec'" /lib/systemd/system/ly.service
+fi
 
 # default shell
 chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors.log
@@ -119,7 +124,7 @@ chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors
 sudo ln -sfT dash /usr/bin/sh || echo "Error relinking /bin/sh" >> ~/.install-errors.log
 
 # errors
-[ -f ~/.install-errors.log ] && echo "\033[1;31m
+[ -f ~/.install-errors.log ] && echo "
 ######################
-ERRORS:" && cat ~/.install-errors.log && echo "######################\033[0m"
+ERRORS:" && cat ~/.install-errors.log && echo "######################"
 
