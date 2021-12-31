@@ -278,7 +278,7 @@ show_menu() {
 }
 
 # dmenu command to pipe into, can add any options here
-dmenu_command="dmenu -i -p"
+dmenu_command="dmenu -i -c -p"
 
 case "$1" in
     --status)
