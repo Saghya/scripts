@@ -32,7 +32,7 @@ toggle_power() {
         bluetoothctl power off
     else
         bluetoothctl power on
-        dmenu-bluetooth
+        dmenu-bluetooth &
     fi
 }
 
