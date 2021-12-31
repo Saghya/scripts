@@ -1,7 +1,10 @@
 #!/bin/bash
 
 OPTIONS="Cancel\n Shutdown\nﰇ Reboot\n Sleep\n Hibernate\n Lock"
-SELECTED=$(echo -e "$OPTIONS" | dmenu -l 6)
+X=$(xdpyinfo | grep dimensions | awk '{ print $2 }' | cut -d x -f 1)
+X=$((X-230))
+Y=40
+SELECTED=$(echo -e "$OPTIONS" | dmenu -l 6 -x "$X" -y "$Y" -z 200)
 
 case $SELECTED in
     " Shutdown") systemctl poweroff ;;
