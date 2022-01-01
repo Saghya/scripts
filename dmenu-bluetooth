@@ -32,12 +32,8 @@ toggle_power() {
         bluetoothctl power off
     else
         bluetoothctl power on
-<<<<<<< HEAD
         # Must be in path to relaunch
-        dmenu-bluetooth "${args[@]}"
-=======
-        dmenu-bluetooth &
->>>>>>> f5c84ef88d1405f23e572c3ff3aafce9a5432fd6
+        dmenu-bluetooth "${args[@]}" &
     fi
 }
 
@@ -272,17 +268,17 @@ show_menu() {
         "$scan")
             toggle_scan
             # Must be in path to relaunch
-            dmenu-bluetooth "${args[@]}"
+            dmenu-bluetooth "${args[@]}" &
             ;;
         "$discoverable")
             toggle_discoverable
             # Must be in path to relaunch
-            dmenu-bluetooth "${args[@]}"
+            dmenu-bluetooth "${args[@]}" &
             ;;
         "$pairable")
             toggle_pairable
             # Must be in path to relaunch
-            dmenu-bluetooth "${args[@]}"
+            dmenu-bluetooth "${args[@]}" &
             ;;
         *)
             device=$(bluetoothctl devices | grep "$chosen")
