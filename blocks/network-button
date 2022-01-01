@@ -1,7 +1,11 @@
 #!/bin/sh
 
+X=$(xdpyinfo | grep dimensions | awk '{ print $2 }' | cut -d x -f 1)
+X=$((X-710))
+Y=40
+
 case $1 in
-    1) networkmanager_dmenu ;;
+    1) networkmanager_dmenu -l 20 -x "$X" -y "$Y" -z 400 ;;
     2) notify-send "$(iw dev wlp0s20f3 info | grep ssid | awk '{print $2}')" ;;
 esac
 

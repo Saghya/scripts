@@ -57,8 +57,9 @@ static Block blocks[] = {
         { PATH(\"cpu\"),                  PATH(\"cpu-button\"),             5,              3},
         { PATH(\"battery\"),              NULL,                          30,              4},
         { PATH(\"network\"),              PATH(\"network-button\"),        15,              5},
-        { PATH(\"date\"),                 NULL,                           5,              6},
-        { PATH(\"powermenu_icon\"),       PATH(\"powermenu\"),              0,              7},
+        { PATH(\"bluetooth\"),            PATH(\"bluetooth-button\"),      15,              6},
+        { PATH(\"date\"),                 PATH(\"date-button\"),            5,              7},
+        { PATH(\"powermenu_icon\"),       PATH(\"powermenu\"),              0,              8},
         { NULL } /* just to mark the end of the array */
 };" >> config.h && sudo make install ||
     echo "Error installing dwmblocks" >> ~/.install-errors.log

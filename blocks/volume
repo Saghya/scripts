@@ -1,33 +1,22 @@
 #!/bin/bash
 
 VOLUME=$(pactl list sinks | grep '^[[:space:]]Volume:' | \
-    head -n $(( $SINK + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
-sink="$(pactl info | awk '$1 == "Default" && $2 == "Sink:" {print $3}')"
-[ -n "$sink" ] || exit
-MUTED=$(pactl list sinks | awk -v sink="$sink" '{ if ($1 == "Mute:" && $2 == "yes") {print $2} }')
-PERCENT="%%"
+    head -n $((SINK + 1)) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
 
-if [ "$MUTED" = "yes" ]
-then
-    ICON="ﱝ"
-    VOLUME=""
-    PERCENT=""
-elif [ "$VOLUME" = 0 ]
-then
-    ICON="婢"
-    VOLUME=""
-    PERCENT=""
-elif [ "$VOLUME" -lt 33 ]
-then
-	ICON="奄"
-elif [ "$VOLUME" -lt 66 ]
-then
-	ICON="奔"
+if pactl list sinks | grep -q "Mute: yes"; then
+    printf "\x0bﱝ "
+    exit
+elif [ "$VOLUME" = 0 ]; then
+    ICON="\x0b婢 "
+elif [ "$VOLUME" -lt 33 ]; then
+	ICON="\x0c奄 \x0b"
+elif [ "$VOLUME" -lt 66 ]; then
+	ICON="\x0c奔 \x0b"
 else
-	ICON="墳"
+	ICON="\x0c墳 \x0b"
 fi
 
 [ "$VOLUME" -gt 100 ] && pactl set-sink-volume 0 100%
 
-printf "\x0c$ICON \x0b$VOLUME$PERCENT"
+printf "$ICON$VOLUME%%"
 

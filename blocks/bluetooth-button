@@ -1,0 +1,10 @@
+#!/bin/sh
+
+X=$(xdpyinfo | grep dimensions | awk '{ print $2 }' | cut -d x -f 1)
+X=$((X-550))
+Y=40
+
+case "$1" in
+    1) dmenu-bluetooth -x "$X" -y "$Y" -z 250;;
+esac
+

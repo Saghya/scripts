@@ -32,7 +32,8 @@ toggle_power() {
         bluetoothctl power off
     else
         bluetoothctl power on
-        dmenu-bluetooth
+        # Must be in path to relaunch
+        dmenu-bluetooth "${args[@]}"
     fi
 }
 
@@ -50,7 +51,7 @@ scan_on() {
 # Toggles scanning state
 toggle_scan() {
     if scan_on; then
-        kill $(pgrep -f "bluetoothctl scan on")
+        kill "$(pgrep -f "bluetoothctl scan on")"
         bluetoothctl scan off
     else
         bluetoothctl scan on &
@@ -109,10 +110,10 @@ device_connected() {
 
 # Toggles device connection
 toggle_connection() {
-    if device_connected $1; then
-        bluetoothctl disconnect $1
+    if device_connected "$1"; then
+        bluetoothctl disconnect "$1"
     else
-        bluetoothctl connect $1
+        bluetoothctl connect "$1"
     fi
 }
 
@@ -130,10 +131,10 @@ device_paired() {
 
 # Toggles device paired state
 toggle_paired() {
-    if device_paired $1; then
-        bluetoothctl remove $1
+    if device_paired "$1"; then
+        bluetoothctl remove "$1"
     else
-        bluetoothctl pair $1
+        bluetoothctl pair "$1"
     fi
 }
 
@@ -151,10 +152,10 @@ device_trusted() {
 
 # Toggles device connection
 toggle_trust() {
-    if device_trusted $1; then
-        bluetoothctl untrust $1
+    if device_trusted "$1"; then
+        bluetoothctl untrust "$1"
     else
-        bluetoothctl trust $1
+        bluetoothctl trust "$1"
     fi
 }
 
@@ -168,8 +169,8 @@ print_status() {
         counter=0
 
         for device in "${paired_devices[@]}"; do
-            if device_connected $device; then
-                device_alias=$(bluetoothctl info $device | grep "Alias" | cut -d ' ' -f 2-)
+            if device_connected "$device"; then
+                device_alias=$(bluetoothctl info "$device" | grep "Alias" | cut -d ' ' -f 2-)
 
                 if [ $counter -gt 0 ]; then
                     printf ", %s" "$device_alias"
@@ -181,7 +182,7 @@ print_status() {
             fi
         done
 
-       if [ $counter -eq 0 ]; then
+       if [ "$counter" -eq 0 ]; then
            printf " On"
        fi
     else
@@ -191,20 +192,20 @@ print_status() {
 
 # A submenu for a specific device that allows connecting, pairing, and trusting
 device_menu() {
-    device=$1
+    device="$1"
 
     # Get device name and mac address
-    device_name=$(echo $device | cut -d ' ' -f 3-)
-    mac=$(echo $device | cut -d ' ' -f 2)
+    device_name=$(echo "$device" | cut -d ' ' -f 3-)
+    mac=$(echo "$device" | cut -d ' ' -f 2)
 
     # Build options
-    if device_connected $mac; then
+    if device_connected "$mac"; then
         connected="Connected: yes"
     else
         connected="Connected: no"
     fi
-    paired=$(device_paired $mac)
-    trusted=$(device_trusted $mac)
+    paired=$(device_paired "$mac")
+    trusted=$(device_trusted "$mac")
     options="$connected\n$paired\n$trusted"
 
     # Open dmenu menu, read chosen option
@@ -215,14 +216,14 @@ device_menu() {
         "")
             echo "No option chosen."
             ;;
-        $connected)
-            toggle_connection $mac
+        "$connected")
+            toggle_connection "$mac"
             ;;
-        $paired)
-            toggle_paired $mac
+        "$paired")
+            toggle_paired "$mac"
             ;;
-        $trusted)
-            toggle_trust $mac
+        "$trusted")
+            toggle_trust "$mac"
             ;;
     esac
 }
@@ -250,25 +251,34 @@ show_menu() {
         options="$power"
     fi
 
+    # Refresh bluetooth block
+    pkill -RTMIN+6 dwmblocks
+
     # Open dmenu menu, read chosen option
     chosen="$(echo -e "$options" | $dmenu_command "Bluetooth")"
 
     # Match chosen option to command
     case $chosen in
-        "" | $divider)
+        "" | "$divider")
             echo "No option chosen."
             ;;
-        $power)
+        "$power")
             toggle_power
             ;;
-        $scan)
+        "$scan")
             toggle_scan
+            # Must be in path to relaunch
+            dmenu-bluetooth "${args[@]}"
             ;;
-        $discoverable)
+        "$discoverable")
             toggle_discoverable
+            # Must be in path to relaunch
+            dmenu-bluetooth "${args[@]}"
             ;;
-        $pairable)
+        "$pairable")
             toggle_pairable
+            # Must be in path to relaunch
+            dmenu-bluetooth "${args[@]}"
             ;;
         *)
             device=$(bluetoothctl devices | grep "$chosen")
@@ -278,15 +288,18 @@ show_menu() {
     esac
 }
 
-# dmenu command to pipe into, can add any options here
-dmenu_command="dmenu -i -c -p"
-
 case "$1" in
     --status)
         print_status
         ;;
     *)
+        args=("$@")
+        # dmenu command to pipe into, can add any options here
+        dmenu_command="dmenu ${args[*]} -i -p"
         show_menu
         ;;
 esac
+
+# Refresh bluetooth block
+pkill -RTMIN+6 dwmblocks
 

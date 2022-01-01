@@ -1,7 +1,6 @@
 #!/bin/bash
 
 HOUR=$(date '+%I')
-CALENDAR=""
 
 case $HOUR in
   "00") CLOCK="" ;;
@@ -20,5 +19,5 @@ case $HOUR in
   *) CLOCK="" ;;
 esac
 
-printf "\x0c$CALENDAR \x0b$(date '+%b %d'), \x0c$CLOCK \x0b$(date '+%I:%M %p')" 
+printf "\x0c \x0b%s, \x0c%s \x0b%s" "$(date '+%b %d')" "$CLOCK" "$(date '+%I:%M %p')" 
 

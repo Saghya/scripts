@@ -1,0 +1,6 @@
+#!/bin/sh
+
+case "$1" in
+    1) notify-send "$(cal)" ;;
+esac
+
