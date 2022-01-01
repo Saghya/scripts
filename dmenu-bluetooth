@@ -32,8 +32,12 @@ toggle_power() {
         bluetoothctl power off
     else
         bluetoothctl power on
+<<<<<<< HEAD
         # Must be in path to relaunch
         dmenu-bluetooth "${args[@]}"
+=======
+        dmenu-bluetooth &
+>>>>>>> f5c84ef88d1405f23e572c3ff3aafce9a5432fd6
     fi
 }
 
