@@ -8,10 +8,10 @@ sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/
 ## PACKAGES
 
 PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xorg-xdpyinfo xorg-xbacklight
-    xclip xdotool xbindkeys xdg-utils man-db polkit acpid pipewire pipewire-pulse pavucontrol udiskie alacritty
-    noto-fonts noto-fonts-emoji firefox libnotify dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting
-    scrot slock vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme arc-icon-theme
-    ueberzug ranger pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright tlp bluez bluez-utils"
+    xclip xdotool xbindkeys xdg-utils man-db polkit acpid pipewire pipewire-pulse pavucontrol wget udiskie alacritty
+    noto-fonts noto-fonts-emoji chromium libnotify dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting
+    scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme arc-icon-theme ueberzug
+    ranger pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright tlp bluez bluez-utils"
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
 done
@@ -67,6 +67,12 @@ static Block blocks[] = {
 # dmenu
 git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu && cd ~/.local/src/dmenu && make && sudo make install ||
     echo "Error installing dmenu" >> ~/.install-errors.log
+
+# slock
+git clone https://git.suckless.org/slock ~/.local/src/slock && cd ~/.local/src/slock &&
+wget https://tools.suckless.org/slock/patches/blur-pixelated-screen/slock-blur_pixelated_screen-1.4.diff &&
+make && sudo make install ||
+    echo "Error installing slock" >> ~/.install-errors.log
 
 # grub-theme
 git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes
