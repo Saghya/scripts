@@ -71,6 +71,8 @@ git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu && cd ~/.local/src/
 # slock
 git clone https://git.suckless.org/slock ~/.local/src/slock && cd ~/.local/src/slock &&
 wget https://tools.suckless.org/slock/patches/blur-pixelated-screen/slock-blur_pixelated_screen-1.4.diff &&
+patch -p1 < slock-blur_pixelated_screen-1.4.diff &&
+sed -i "s/nogroup/$USER/g" config.def.h &&
 make && sudo make install ||
     echo "Error installing slock" >> ~/.install-errors.log
 
