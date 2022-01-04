@@ -97,7 +97,7 @@ sudo systemctl enable acpid.service || error "Error enabling acpid.service"
 sudo touch /etc/acpi/events/jack &&
 echo "event=jack*
 action=pkill -RTMIN+1 dwmblocks" | sudo tee /etc/acpi/events/jack ||
-echo "Error creating jack event" >> ~/.install-errors.log
+    error "Error creating jack event"
 sudo touch /etc/acpi/events/ac_adapter &&
 echo "event=ac_adapter
 action=pkill -RTMIN+4 dwmblocks" | sudo tee /etc/acpi/events/ac_adapter ||
