@@ -1,6 +1,8 @@
 #!/bin/sh
 
 [ -f ~/.install-errors.log ] && rm ~/.install-errors.log
+error() { printf "%s\n" "$1" >> ~/.install-errors.log; }
+
 # Make pacman colorful, concurrent downloads and Pacman eye-candy.
 sudo grep -q "ILoveCandy" /etc/pacman.conf || sudo sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
 sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/" /etc/pacman.conf
@@ -13,7 +15,7 @@ PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xo
     scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme arc-icon-theme ueberzug
     ranger pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright tlp bluez bluez-utils"
 for PCKG in $PCKGS; do
-    sudo pacman --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
+    sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
 done
 
 # Use all cores for compilation.
@@ -26,23 +28,23 @@ mkdir -p ~/.local/src
 
 # yay
 git clone https://aur.archlinux.org/yay-bin.git ~/.local/src/yay-bin && cd ~/.local/src/yay-bin && makepkg --noconfirm -si ||
-    echo "Error installing yay" >> ~/.install-errors.log
+    error "Error installing yay"
 
 AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly
     batsignal dashbinsh networkmanager-dmenu-git tlpui libinput-gestures"
 for PCKG in $AUR_PCKGS; do
-    yay --needed --noconfirm -S "$PCKG" || echo "Error installing $PCKG" >> ~/.install-errors.log
+    yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
 done
 
 ## GIT PACKAGES
 
 # dotfiles
 git clone --bare https://github.com/Saghya/dotfiles ~/.local/dotfiles && /usr/bin/git --git-dir="$HOME"/.local/dotfiles/ \
-    --work-tree="$HOME" checkout || echo "Error installing dotfiles" >> ~/.install-errors.log
+    --work-tree="$HOME" checkout || error "Error installing dotfiles"
 
 # dwm
 git clone https://github.com/Saghya/dwm ~/.local/src/dwm && cd ~/.local/src/dwm && make && sudo make install ||
-    echo "Error installing dwm" >> ~/.install-errors.log
+    error "Error installing dwm"
 
 # dwmblocks
 git clone https://github.com/ashish-yadav11/dwmblocks ~/.local/src/dwmblocks && cd ~/.local/src/dwmblocks &&
@@ -62,11 +64,11 @@ static Block blocks[] = {
         { PATH(\"powermenu_icon\"),       PATH(\"powermenu\"),              0,              8},
         { NULL } /* just to mark the end of the array */
 };" >> config.h && sudo make install ||
-    echo "Error installing dwmblocks" >> ~/.install-errors.log
+    error "Error installing dwmblocks"
 
 # dmenu
 git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu && cd ~/.local/src/dmenu && make && sudo make install ||
-    echo "Error installing dmenu" >> ~/.install-errors.log
+    error "Error installing dmenu"
 
 # slock
 git clone https://git.suckless.org/slock ~/.local/src/slock && cd ~/.local/src/slock &&
@@ -74,7 +76,7 @@ wget https://tools.suckless.org/slock/patches/blur-pixelated-screen/slock-blur_p
 patch -p1 < slock-blur_pixelated_screen-1.4.diff &&
 sed -i "s/nogroup/$USER/g" config.def.h &&
 make && sudo make install ||
-    echo "Error installing slock" >> ~/.install-errors.log
+    error "Error installing slock"
 
 # grub-theme
 git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes
@@ -88,10 +90,10 @@ echo "Section \"InputClass\"
     Option \"Tapping\" \"on\"
     Option \"NaturalScrolling\" \"true\"
 EndSection" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf ||
-    echo "Error configuring touchpad" >> ~/.install-errors.log
+    error "Error configuring touchpad"
 
 # acpi events
-sudo systemctl enable acpid.service || echo "Error enabling acpid.service" >> ~/.install-errors.log
+sudo systemctl enable acpid.service || error "Error enabling acpid.service"
 sudo touch /etc/acpi/events/jack &&
 echo "event=jack*
 action=pkill -RTMIN+1 dwmblocks" | sudo tee /etc/acpi/events/jack ||
@@ -99,16 +101,19 @@ echo "Error creating jack event" >> ~/.install-errors.log
 sudo touch /etc/acpi/events/ac_adapter &&
 echo "event=ac_adapter
 action=pkill -RTMIN+4 dwmblocks" | sudo tee /etc/acpi/events/ac_adapter ||
-    echo "Error creating ac_adapter event" >> ~/.install-errors.log
+    error "Error creating ac_adapter event"
 
 # allow changing brightness for users in video group
 sudo touch /etc/udev/rules.d/backlight.rules &&
 echo "ACTION==\"add\", SUBSYSTEM==\"backlight\", KERNEL==\"acpi_video0\", GROUP=\"video\", MODE=\"0664\"" |
 sudo tee /etc/udev/rules.d/backlight.rules ||
-    echo "Error allowing brightness changing" >> ~/.install-erros.log
+    error "Error allowing brightness changing"
+
+# tlp
+sudo systemctl enable tlp.service || error "Error enabling tlp"
 
 # bluetooth
-sudo systemctl enable bluetooth.service || echo "Error enabling bluetooth" >> ~/.install-errors.log
+sudo systemctl enable bluetooth.service || error "Error enabling bluetooth"
 
 # dwm login session
 sudo mkdir -p /usr/share/xsessions &&
@@ -120,7 +125,7 @@ Comment=Dynamic window manager
 Exec=startdwm
 Icon=dwm
 Type=XSession" | sudo tee /usr/share/xsessions/dwm.desktop ||
-    echo "Error creating dwm login session" >> ~/.install-errors.log
+    error "Error creating dwm login session"
 
 # display manager
 sudo systemctl enable ly.service &&
@@ -131,9 +136,9 @@ if [ "$(sed "8q;d" /lib/systemd/system/ly.service)" != "ExecStartPre=/usr/bin/pr
 fi
 
 # default shell
-chsh -s /usr/bin/zsh || echo "Error changing default shell" >> ~/.install-errors.log
+chsh -s /usr/bin/zsh || error "Error changing default shell"
 # relinking /bin/sh
-sudo ln -sfT dash /usr/bin/sh || echo "Error relinking /bin/sh" >> ~/.install-errors.log
+sudo ln -sfT dash /usr/bin/sh || error "Error relinking /bin/sh"
 
 # errors
 [ -f ~/.install-errors.log ] && echo "
