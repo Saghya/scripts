@@ -288,6 +288,10 @@ show_menu() {
     esac
 }
 
+if bluetooth | grep -q "bluetooth = none"; then
+    exit
+fi
+
 case "$1" in
     --status)
         print_status
