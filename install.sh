@@ -75,7 +75,23 @@ git clone https://git.suckless.org/slock ~/.local/src/slock && cd ~/.local/src/s
 wget https://tools.suckless.org/slock/patches/blur-pixelated-screen/slock-blur_pixelated_screen-1.4.diff &&
 patch -p1 < slock-blur_pixelated_screen-1.4.diff &&
 sed -i "s/nogroup/$USER/g" config.def.h &&
-make && sudo make install ||
+make && sudo make install &&
+sudo touch /etc/systemd/system/slock@.service &&
+echo "[Unit]
+Description=Lock X session using slock for user %i
+Before=sleep.target
+Before=suspend.target
+
+[Service]
+User=%i
+Environment=DISPLAY=:0
+ExecStartPre=/usr/bin/xset dpms force suspend
+ExecStart=/usr/local/bin/slock
+
+[Install]
+WantedBy=sleep.target
+WantedBy=suspend.target" | sudo tee /etc/systemd/system/slock@.service &&
+systemctl enable slock@"$USER".service ||
     error "Error installing slock"
 
 # grub-theme
