@@ -12,6 +12,6 @@ case $SELECTED in
     " Sleep") systemctl suspend ;;
     " Hibernate") systemctl hibernate ;;
     " Lock") slock ;;
-    *) return ;;
+    *) exit ;;
 esac
 
