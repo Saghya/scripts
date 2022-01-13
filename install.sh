@@ -14,7 +14,7 @@ PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xo
     noto-fonts noto-fonts-emoji chromium libnotify dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting
     scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme arc-icon-theme ueberzug
     ranger pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright tlp bluez bluez-utils"
-sudo pacman -Syyu
+sudo pacman --noconfirm -Syyu
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
 done
