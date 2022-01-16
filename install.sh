@@ -92,7 +92,7 @@ ExecStart=/usr/local/bin/slock
 [Install]
 WantedBy=sleep.target
 WantedBy=suspend.target" | sudo tee /etc/systemd/system/slock@.service &&
-systemctl enable slock@"$USER".service) ||
+sudo systemctl enable slock@"$USER".service) ||
     error "Error installing slock"
 
 # grub-theme
@@ -101,7 +101,6 @@ sudo ~/.local/src/grub2-themes/install.sh -b -t tela
 
 # touchpad
 (sudo gpasswd -a $USER input &&
-sudo libinput-gestures-setup autostart start &&
 sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf &&
 echo "Section \"InputClass\"
     Identifier \"devname\"
