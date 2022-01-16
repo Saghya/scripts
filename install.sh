@@ -12,7 +12,7 @@ sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/
 PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xorg-xdpyinfo xorg-xbacklight
     xclip xdotool xbindkeys xdg-utils man-db polkit acpid pipewire pipewire-pulse pavucontrol wget udiskie alacritty
     noto-fonts noto-fonts-emoji chromium libnotify dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting
-    scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme arc-icon-theme ueberzug
+    scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme papirus-icon-theme ueberzug
     ranger pcmanfm zathura zathura-pdf-mupdf mpv exa inetutils ripgrep fd clang pyright tlp tlp-rdw bluez bluez-utils"
 sudo pacman --noconfirm -Syyu
 for PCKG in $PCKGS; do
