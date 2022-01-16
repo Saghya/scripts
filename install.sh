@@ -13,7 +13,7 @@ PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xo
     xclip xdotool xbindkeys xdg-utils man-db polkit acpid pipewire pipewire-pulse pavucontrol wget udiskie alacritty
     noto-fonts noto-fonts-emoji chromium libnotify dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting
     scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme arc-icon-theme ueberzug
-    ranger pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright tlp bluez bluez-utils"
+    ranger pcmanfm zathura zathura-pdf-mupdf exa inetutils ripgrep fd clang pyright tlp tlp-rdw bluez bluez-utils"
 sudo pacman --noconfirm -Syyu
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
@@ -127,7 +127,11 @@ sudo tee /etc/udev/rules.d/backlight.rules ||
     error "Error allowing brightness changing"
 
 # tlp
-sudo systemctl enable tlp.service || error "Error enabling tlp"
+sudo systemctl enable tlp.service &&
+sudo systemctl enable NetworkManager-dispatcher.service &&
+sudo systemctl mask systemd-rfkill.service &&
+sudo systemctl mask systemd-rfkill.socket ||
+    error "Error enabling tlp"
 
 # bluetooth
 sudo systemctl enable bluetooth.service || error "Error enabling bluetooth"
