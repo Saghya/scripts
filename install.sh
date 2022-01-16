@@ -100,7 +100,7 @@ git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes 
 sudo ~/.local/src/grub2-themes/install.sh -b -t tela
 
 # touchpad
-(sudo gpasswd -a $USER input &&
+(sudo usermod -a -G input "$USER" &&
 sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf &&
 echo "Section \"InputClass\"
     Identifier \"devname\"
@@ -122,7 +122,7 @@ action=pkill -RTMIN+4 dwmblocks" | sudo tee /etc/acpi/events/ac_adapter) ||
     error "Error creating ac_adapter event"
 
 # brightness and video group
-(sudo usermod -a video "$USER"
+(sudo usermod -a -G video "$USER"
 sudo touch /etc/udev/rules.d/backlight.rules &&
 echo "ACTION==\"add\", SUBSYSTEM==\"backlight\", KERNEL==\"acpi_video0\", GROUP=\"video\", MODE=\"0664\"" |
 sudo tee /etc/udev/rules.d/backlight.rules) ||
