@@ -96,9 +96,8 @@ systemctl enable slock@"$USER".service) ||
     error "Error installing slock"
 
 # grub-theme
-(git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes &&
-sudo ~/.local/src/grub2-themes/install.sh -b -t tela) ||
-    error "Error installing grub-theme"
+git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes &&
+sudo ~/.local/src/grub2-themes/install.sh -b -t tela
 
 # touchpad
 (sudo gpasswd -a $USER input &&
