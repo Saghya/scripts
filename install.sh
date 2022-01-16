@@ -120,7 +120,8 @@ echo "event=ac_adapter
 action=pkill -RTMIN+4 dwmblocks" | sudo tee /etc/acpi/events/ac_adapter ||
     error "Error creating ac_adapter event"
 
-# allow changing brightness for users in video group
+# brightness and video group
+sudo usermod -a -G video "$USER"
 sudo touch /etc/udev/rules.d/backlight.rules &&
 echo "ACTION==\"add\", SUBSYSTEM==\"backlight\", KERNEL==\"acpi_video0\", GROUP=\"video\", MODE=\"0664\"" |
 sudo tee /etc/udev/rules.d/backlight.rules ||
@@ -157,7 +158,7 @@ if [ "$(sed "8q;d" /lib/systemd/system/ly.service)" != "ExecStartPre=/usr/bin/pr
 fi
 
 # default shell
-chsh -s /usr/bin/zsh || error "Error changing default shell"
+sudo usermod -s /usr/bin/zsh "$USER" || error "Error changing default shell"
 # relinking /bin/sh
 sudo ln -sfT dash /usr/bin/sh || error "Error relinking /bin/sh"
 
