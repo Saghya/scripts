@@ -20,7 +20,7 @@ for PCKG in $PCKGS; do
 done
 
 # Use all cores for compilation.
-sudo sed -i "s/-j2/-j$(nproc)/;s/^#MAKEFLAGS/MAKEFLAGS/" /etc/makepkg.conf
+# sudo sed -i "s/-j2/-j$(nproc)/;s/^#MAKEFLAGS/MAKEFLAGS/" /etc/makepkg.conf
 
 # directory for source files
 mkdir -p ~/.local/src
