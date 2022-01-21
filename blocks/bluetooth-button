@@ -6,5 +6,10 @@ Y=40
 
 case "$1" in
     1) dmenu-bluetooth -x "$X" -y "$Y" -z 250;;
+    2) if [ "$(bluetoothctl paired-devices)" = "" ]; then
+        dunstify -r 5555 "No bluetooth device connected"
+    else
+        dunstify -r 5555 "$(bluetoothctl paired-devices | awk '{$1=""; $2=""; sub("  ", "")}1')"
+    fi
 esac
 

@@ -1,23 +1,22 @@
 #!/bin/bash
 
-read -r BAT < /sys/class/power_supply/BAT0/capacity
-read -r AC < /sys/class/power_supply/AC/online
-
-if [ "$AC" = 1 ]
-then
-ICON=""
+if [ -f /sys/class/power_supply/BAT0/capacity ]; then
+    read -r BAT < /sys/class/power_supply/BAT0/capacity
+    read -r AC < /sys/class/power_supply/AC/online
 else
-	if [ "$BAT" -lt 20 ]
-	then
+    exit
+fi
+
+if [ "$AC" = 1 ]; then
+    ICON=""
+else
+	if [ "$BAT" -lt 20 ]; then
 		ICON=" "
-	elif [ "$BAT" -lt 40 ]
-	then
+	elif [ "$BAT" -lt 40 ]; then
 		ICON=" "
-	elif [ "$BAT" -lt 60 ]
-	then
+	elif [ "$BAT" -lt 60 ]; then
 		ICON=" "
-	elif [ "$BAT" -lt 80 ]
-	then
+	elif [ "$BAT" -lt 80 ]; then
         ICON=" "
 	else
 		ICON=" "

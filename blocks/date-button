@@ -1,6 +1,6 @@
 #!/bin/sh
 
 case "$1" in
-    1) notify-send "$(cal)" ;;
+    1) dunstify -r 5555 "$(cal)" ;;
 esac
 
