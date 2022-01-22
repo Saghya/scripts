@@ -1,7 +1,6 @@
 #!/bin/bash
 
-VOLUME=$(pactl list sinks | grep '^[[:space:]]Volume:' | \
-    head -n $((SINK + 1)) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
+VOLUME=$(pamixer --get-volume)
 
 function send_notification() {
     dash=$(seq -s "─" 0 $((VOLUME / 5)) | sed 's/[0-9]//g')
@@ -10,7 +9,7 @@ function send_notification() {
     dunstify -r 5555 "$1  $bar"
 }
 
-if pactl list sinks | grep -q "Mute: yes"; then
+if pamixer --get-volume-human | grep -q "muted"; then
     dunstify -r 5555 "....................  ﱝ"
 elif [ "$VOLUME" = 0 ]; then
     send_notification "婢"
