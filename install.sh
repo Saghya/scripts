@@ -18,11 +18,11 @@ mkdir -p ~/.local/src
 
 ## PACKAGES ##
 
-PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xorg-xdpyinfo xorg-xbacklight
-    xclip xdotool xbindkeys xdg-utils man-db polkit acpid pipewire pipewire-pulse pavucontrol pamixer wget udiskie
+PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xorg-xdpyinfo xclip xdotool
+    xbindkeys xdg-utils man-db polkit acpid pipewire pipewire-pulse pavucontrol pamixer wget udiskie
     alacritty noto-fonts noto-fonts-emoji chromium dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting
-    scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme papirus-icon-theme ueberzug
-    ranger pcmanfm zathura zathura-pdf-mupdf mpv exa inetutils ripgrep fd clang pyright"
+    scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme papirus-icon-theme
+    ueberzug ranger pcmanfm zathura zathura-pdf-mupdf mpv exa inetutils ripgrep fd clang pyright bluez bluez-utils"
 sudo pacman --noconfirm -Syyu
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
@@ -105,10 +105,17 @@ sudo systemctl enable slock@"$USER".service) ||
 
 if hostnamectl status | grep Chassis | cut -f2 -d ":" | tr -d ' ' | grep -q "laptop"; then
 
-    L_PCKGS="tlp tlp-rdw tlpui bluez bluez-utils batsignal libinput-gestures"
+    L_PCKGS="xorg-xbacklight tlp tlp-rdw tlpui batsignal libinput-gestures"
     for PCKG in $L_PCKGS; do
         sudo yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
     done
+
+    # tlp
+    (sudo systemctl enable tlp.service &&
+    sudo systemctl enable NetworkManager-dispatcher.service &&
+    sudo systemctl mask systemd-rfkill.service &&
+    sudo systemctl mask systemd-rfkill.socket) ||
+        error "Error enabling tlp"
 
     # touchpad
     (sudo usermod -a -G input "$USER" &&
@@ -133,16 +140,6 @@ if hostnamectl status | grep Chassis | cut -f2 -d ":" | tr -d ' ' | grep -q "lap
     echo "ACTION==\"add\", SUBSYSTEM==\"backlight\", KERNEL==\"acpi_video0\", GROUP=\"video\", MODE=\"0664\"" |
     sudo tee /etc/udev/rules.d/backlight.rules) ||
         error "Error allowing brightness changing"
-    
-    # tlp
-    (sudo systemctl enable tlp.service &&
-    sudo systemctl enable NetworkManager-dispatcher.service &&
-    sudo systemctl mask systemd-rfkill.service &&
-    sudo systemctl mask systemd-rfkill.socket) ||
-        error "Error enabling tlp"
-    
-    # bluetooth
-    sudo systemctl enable bluetooth.service || error "Error enabling bluetooth"
 
 fi
 
@@ -173,6 +170,9 @@ sudo systemctl enable acpid.service || error "Error enabling acpid.service"
 echo "event=jack*
 action=pkill -RTMIN+1 dwmblocks" | sudo tee /etc/acpi/events/jack) ||
     error "Error creating jack event"
+
+# bluetooth
+sudo systemctl enable bluetooth.service || error "Error enabling bluetooth"
 
 # default shell
 sudo usermod -s /usr/bin/zsh "$USER" || error "Error changing default shell"
