@@ -188,7 +188,7 @@ sudo ~/.local/src/grub2-themes/install.sh -b -t tela
 if [ -f ~/.install-errors.log ]; then
     printf "\033[0;31m######################\nERRORS:\n"
     cat ~/.install-errors.log
-    echo "######################'\033[0m'"
+    echo "######################\033[0m"
 else
     sudo reboot
 fi
