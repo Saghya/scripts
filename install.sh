@@ -1,5 +1,7 @@
 #!/bin/sh
 
+## SETUP ##
+
 [ -f ~/.install-errors.log ] && rm ~/.install-errors.log
 error() { printf "%s\n" "$1" >> ~/.install-errors.log; }
 
@@ -7,37 +9,40 @@ error() { printf "%s\n" "$1" >> ~/.install-errors.log; }
 sudo grep -q "ILoveCandy" /etc/pacman.conf || sudo sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
 sudo sed -i "s/^#ParallelDownloads = 8$/ParallelDownloads = 5/;s/^#Color$/Color/" /etc/pacman.conf
 
-## PACKAGES
-
-PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xorg-xdpyinfo xorg-xbacklight
-    xclip xdotool xbindkeys xdg-utils man-db polkit acpid pipewire pipewire-pulse pavucontrol pamixer wget udiskie
-    alacritty noto-fonts noto-fonts-emoji chromium libnotify dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting
-    scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme papirus-icon-theme ueberzug
-    ranger pcmanfm zathura zathura-pdf-mupdf mpv exa inetutils ripgrep fd clang pyright tlp tlp-rdw bluez bluez-utils"
-sudo pacman --noconfirm -Syyu
-for PCKG in $PCKGS; do
-    sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
-done
-
 # Use all cores for compilation.
 # sudo sed -i "s/-j2/-j$(nproc)/;s/^#MAKEFLAGS/MAKEFLAGS/" /etc/makepkg.conf
 
 # directory for source files
 mkdir -p ~/.local/src
 
-## AUR PACKAGES
+
+## PACKAGES ##
+
+PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xorg-xdpyinfo xorg-xbacklight
+    xclip xdotool xbindkeys xdg-utils man-db polkit acpid pipewire pipewire-pulse pavucontrol pamixer wget udiskie
+    alacritty noto-fonts noto-fonts-emoji chromium dunst feh dash zsh zsh-autosuggestions zsh-syntax-highlighting
+    scrot vim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme papirus-icon-theme ueberzug
+    ranger pcmanfm zathura zathura-pdf-mupdf mpv exa inetutils ripgrep fd clang pyright"
+sudo pacman --noconfirm -Syyu
+for PCKG in $PCKGS; do
+    sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
+done
+
+
+## AUR PACKAGES ##
 
 # yay
 (git clone https://aur.archlinux.org/yay-bin.git ~/.local/src/yay-bin && cd ~/.local/src/yay-bin && makepkg --noconfirm -si) ||
     error "Error installing yay"
 
-AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly
-    batsignal dashbinsh networkmanager-dmenu-git tlpui libinput-gestures"
+AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly dashbinsh
+    networkmanager-dmenu-git"
 for PCKG in $AUR_PCKGS; do
     yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
 done
 
-## GIT PACKAGES
+
+## GIT PACKAGES ##
 
 # dotfiles
 (git clone --bare https://github.com/Saghya/dotfiles ~/.local/dotfiles && /usr/bin/git --git-dir="$HOME"/.local/dotfiles/ \
@@ -95,48 +100,51 @@ WantedBy=suspend.target" | sudo tee /etc/systemd/system/slock@.service &&
 sudo systemctl enable slock@"$USER".service) ||
     error "Error installing slock"
 
-# grub-theme
-git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes &&
-sudo ~/.local/src/grub2-themes/install.sh -b -t tela
 
-# touchpad
-(sudo usermod -a -G input "$USER" &&
-sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf &&
-echo "Section \"InputClass\"
-    Identifier \"devname\"
-    Driver \"libinput\"
-    Option \"Tapping\" \"on\"
-    Option \"NaturalScrolling\" \"true\"
-EndSection" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf) ||
-    error "Error configuring touchpad"
+## LAPTOP ##
 
-# acpi events
-sudo systemctl enable acpid.service || error "Error enabling acpid.service"
-(sudo touch /etc/acpi/events/jack &&
-echo "event=jack*
-action=pkill -RTMIN+1 dwmblocks" | sudo tee /etc/acpi/events/jack) ||
-    error "Error creating jack event"
-(sudo touch /etc/acpi/events/ac_adapter &&
-echo "event=ac_adapter
-action=pkill -RTMIN+4 dwmblocks" | sudo tee /etc/acpi/events/ac_adapter) ||
-    error "Error creating ac_adapter event"
+if hostnamectl status | grep Chassis | cut -f2 -d ":" | tr -d ' ' | grep -q "laptop"; then
 
-# brightness and video group
-(sudo usermod -a -G video "$USER"
-sudo touch /etc/udev/rules.d/backlight.rules &&
-echo "ACTION==\"add\", SUBSYSTEM==\"backlight\", KERNEL==\"acpi_video0\", GROUP=\"video\", MODE=\"0664\"" |
-sudo tee /etc/udev/rules.d/backlight.rules) ||
-    error "Error allowing brightness changing"
+    L_PCKGS="tlp tlp-rdw tlpui bluez bluez-utils batsignal libinput-gestures"
+    for PCKG in $L_PCKGS; do
+        sudo yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
+    done
 
-# tlp
-(sudo systemctl enable tlp.service &&
-sudo systemctl enable NetworkManager-dispatcher.service &&
-sudo systemctl mask systemd-rfkill.service &&
-sudo systemctl mask systemd-rfkill.socket) ||
-    error "Error enabling tlp"
+    # touchpad
+    (sudo usermod -a -G input "$USER" &&
+    sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf &&
+    echo "Section \"InputClass\"
+        Identifier \"devname\"
+        Driver \"libinput\"
+        Option \"Tapping\" \"on\"
+        Option \"NaturalScrolling\" \"true\"
+    EndSection" | sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf) ||
+        error "Error configuring touchpad"
+    
+    # acpi events
+    (sudo touch /etc/acpi/events/ac_adapter &&
+    echo "event=ac_adapter
+    action=pkill -RTMIN+4 dwmblocks" | sudo tee /etc/acpi/events/ac_adapter) ||
+        error "Error creating ac_adapter event"
+    
+    # brightness and video group
+    (sudo usermod -a -G video "$USER"
+    sudo touch /etc/udev/rules.d/backlight.rules &&
+    echo "ACTION==\"add\", SUBSYSTEM==\"backlight\", KERNEL==\"acpi_video0\", GROUP=\"video\", MODE=\"0664\"" |
+    sudo tee /etc/udev/rules.d/backlight.rules) ||
+        error "Error allowing brightness changing"
+    
+    # tlp
+    (sudo systemctl enable tlp.service &&
+    sudo systemctl enable NetworkManager-dispatcher.service &&
+    sudo systemctl mask systemd-rfkill.service &&
+    sudo systemctl mask systemd-rfkill.socket) ||
+        error "Error enabling tlp"
+    
+    # bluetooth
+    sudo systemctl enable bluetooth.service || error "Error enabling bluetooth"
 
-# bluetooth
-sudo systemctl enable bluetooth.service || error "Error enabling bluetooth"
+fi
 
 # dwm login session
 (sudo mkdir -p /usr/share/xsessions &&
@@ -159,18 +167,30 @@ if [ "$(sed "8q;d" /lib/systemd/system/ly.service)" != "ExecStartPre=/usr/bin/pr
 fi) ||
     error "Error configuring ly"
 
+# acpi events
+sudo systemctl enable acpid.service || error "Error enabling acpid.service"
+(sudo touch /etc/acpi/events/jack &&
+echo "event=jack*
+action=pkill -RTMIN+1 dwmblocks" | sudo tee /etc/acpi/events/jack) ||
+    error "Error creating jack event"
+
 # default shell
 sudo usermod -s /usr/bin/zsh "$USER" || error "Error changing default shell"
+
 # relinking /bin/sh
 sudo ln -sfT dash /usr/bin/sh || error "Error relinking /bin/sh"
 
+# grub-theme
+git clone https://github.com/vinceliuice/grub2-themes ~/.local/src/grub2-themes &&
+sudo ~/.local/src/grub2-themes/install.sh -b -t tela
+
 # errors
 if [ -f ~/.install-errors.log ]; then
-    echo "
+    printf "'\033[0;31m'
 ######################
 ERRORS:"
     cat ~/.install-errors.log
-    echo "######################"
+    echo "######################'\033[0m'"
 else
     sudo reboot
 fi
