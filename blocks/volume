@@ -2,8 +2,8 @@
 
 VOLUME=$(pamixer --get-volume)
 
-if pamixer --get-volume-human | grep -q "muted"; then
-    printf "\x0bﱝ "
+if [ "$(pamixer --get-mute)" = true ]; then
+    printf "\x0bﱝ"
     exit
 elif [ "$VOLUME" = 0 ]; then
     ICON="\x0b婢 "
