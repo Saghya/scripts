@@ -23,7 +23,7 @@ function send_notification {
   bar=$dash$space
   # Send the notification
   # dunstify -i "$icon" -r 5555 -u normal "    $bar"
-  dunstify -r 5555 "  $bar"
+  dunstify -r 5555 -t 1000 "  $bar"
 }
 
 case $1 in

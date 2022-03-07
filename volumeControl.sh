@@ -6,7 +6,7 @@ function send_notification() {
     dash=$(seq -s "─" 0 $((VOLUME / 5)) | sed 's/[0-9]//g')
     space=$(seq -s "." 0 $(( 20 - $((VOLUME / 5)))) | sed 's/[0-9]//g')
     bar=$dash$space
-    dunstify -r 5555 "$1  $bar"
+    dunstify -r 5555 -t 1000 "$1  $bar"
 }
 
 if pamixer --get-volume-human | grep -q "muted"; then
