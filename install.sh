@@ -36,7 +36,7 @@ done
 (git clone https://aur.archlinux.org/yay-bin.git ~/.local/src/yay-bin && cd ~/.local/src/yay-bin && makepkg --noconfirm -si) ||
     error "Error installing yay"
 
-AUR_PCKGS="pfetch breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly dashbinsh
+AUR_PCKGS="breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly dashbinsh
     networkmanager-dmenu-git"
 for PCKG in $AUR_PCKGS; do
     yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
@@ -100,6 +100,10 @@ WantedBy=sleep.target
 WantedBy=suspend.target" | sudo tee /etc/systemd/system/slock@.service &&
 sudo systemctl enable slock@"$USER".service) ||
     error "Error installing slock"
+
+# afetch
+(git clone https://github.com/Saghya/afetch ~/.local/src/afetch && cd ~/.local/src/afetch && make && sudo make install) ||
+    error "Error installing afetch"
 
 
 ## LAPTOP ##
