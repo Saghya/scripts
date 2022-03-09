@@ -23,7 +23,7 @@ PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xo
     alacritty noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji chromium dunst feh dash zsh
     zsh-autosuggestions zsh-syntax-highlighting maim vim neovim picom lxappearance gtk-engine-murrine
     gnome-themes-extra arc-gtk-theme papirus-icon-theme ueberzug ranger pcmanfm zathura zathura-pdf-mupdf
-    mpv exa inetutils ripgrep fd clang pyright bluez bluez-utils ntfs-3g"
+    mpv exa inetutils ripgrep fd clang pyright bluez bluez-utils ntfs-3g firewalld"
 sudo pacman --noconfirm -Syyu
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
@@ -178,6 +178,9 @@ action=pkill -RTMIN+1 dwmblocks" | sudo tee /etc/acpi/events/jack) ||
 
 # bluetooth
 sudo systemctl enable bluetooth.service || error "Error enabling bluetooth"
+
+# firewall
+sudo systemctl enable firewalld.service || error "Error enabling firewall"
 
 # default shell
 sudo usermod -s /usr/bin/zsh "$USER" || error "Error changing default shell"
