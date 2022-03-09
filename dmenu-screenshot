@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case "$(printf "Select area\\nCurrent window\\nFull screen" | dmenu -l 3 -i)" in
+    "Select area") (maim -u -s -k | tee /tmp/pic-selected-"$(date '+%y%m%d-%H%M-%S').png" | xclip -selection clipboard -t image/png) &&
+        notify-send -t 1000 "Screenshot saved to /tmp" ;;
+    "Current window") (maim -u -i "$(xdotool getactivewindow)" | tee /tmp/pic-window-"$(date '+%y%m%d-%H%M-%S').png" | xclip -selection clipboard -t image/png) &&
+        notify-send -t 1000 "Screenshot saved to /tmp" ;;
+    "Full screen") (maim -u | tee /tmp/pic-full-"$(date '+%y%m%d-%H%M-%S').png" | xclip -selection clipboard -t image/png) &&
+        notify-send -t 1000 "Screenshot saved to /tmp" ;;
+esac
+
