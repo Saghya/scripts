@@ -22,9 +22,8 @@ PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xo
     xbindkeys xdg-utils man-db man-pages polkit acpid pipewire pipewire-pulse pavucontrol pamixer wget
     udiskie alacritty noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji chromium dunst feh dash
     zsh zsh-autosuggestions zsh-syntax-highlighting maim vim neovim picom lxappearance gtk-engine-murrine
-    gnome-themes-extra arc-gtk-theme papirus-icon-theme kvantum kvantum-theme-arc qt5ct qt6ct ueberzug
-    ranger pcmanfm zathura zathura-pdf-mupdf mpv exa inetutils ripgrep fd clang pyright bluez bluez-utils
-    ntfs-3g firewalld"
+    gnome-themes-extra arc-gtk-theme papirus-icon-theme kvantum qt5ct qt6ct ueberzug ranger pcmanfm
+    zathura zathura-pdf-mupdf mpv exa inetutils ripgrep fd clang pyright bluez bluez-utils ntfs-3g firewalld"
 sudo pacman --noconfirm -Syyu
 for PCKG in $PCKGS; do
     sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
@@ -38,7 +37,7 @@ done
     error "Error installing yay"
 
 AUR_PCKGS="breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly dashbinsh
-    networkmanager-dmenu-git"
+    networkmanager-dmenu-git kvantum-theme-arc"
 for PCKG in $AUR_PCKGS; do
     yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
 done
