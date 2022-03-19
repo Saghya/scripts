@@ -10,7 +10,7 @@ function send_notification() {
 }
 
 if pamixer --get-volume-human | grep -q "muted"; then
-    dunstify -r 5555 "....................  ﱝ"
+    dunstify -r 5555 -t 1000 "....................  ﱝ"
 elif [ "$VOLUME" = 0 ]; then
     send_notification "婢"
 elif [ "$VOLUME" -lt 33 ]; then
