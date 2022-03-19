@@ -82,6 +82,7 @@ static Block blocks[] = {
 wget https://tools.suckless.org/slock/patches/blur-pixelated-screen/slock-blur_pixelated_screen-1.4.diff &&
 git apply slock-blur_pixelated_screen-1.4.diff &&
 sed -i "s/nogroup/$USER/g" config.def.h &&
+sed -i '/^\s*XBell/d' slock.c && # Remove annoying bell
 make && sudo make install &&
 sudo touch /etc/systemd/system/slock@.service &&
 echo "[Unit]
