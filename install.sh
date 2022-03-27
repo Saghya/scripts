@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 error() { printf "%s\n" "$1" >> ~/.install-errors.log; }
 
@@ -72,20 +72,20 @@ git_packages() {
         sudo make install
         sed -i "20,22d" config.h 
         sed -i "$(( $(wc -l <~/.local/src/dwmblocks/config.h)-8+1 )),$ d" ~/.local/src/dwmblocks/config.h &&
-        echo "static const char delimiter[] = { ' ', '|', ' ', DELIMITERENDCHAR };\n"\
-             "#include \"block.h\"\n"\
-             "static Block blocks[] = {\n"\
-             "/*      pathu                           pathc                           interval        signal */\n"\
-             "        { PATH(\"volume\"),               PATH(\"volume-button\"),          1,              1},\n"\
-             "        { PATH(\"memory\"),               PATH(\"memory-button\"),          5,              2},\n"\
-             "        { PATH(\"cpu\"),                  PATH(\"cpu-button\"),             5,              3},\n"\
-             "        { PATH(\"battery\"),              NULL,                          30,              4},\n"\
-             "        { PATH(\"network\"),              PATH(\"network-button\"),        15,              5},\n"\
-             "        { PATH(\"bluetooth\"),            PATH(\"bluetooth-button\"),      15,              6},\n"\
-             "        { PATH(\"date\"),                 PATH(\"date-button\"),            5,              7},\n"\
-             "        { PATH(\"powermenu_icon\"),       PATH(\"powermenu\"),              0,              8},\n"\
-             "        { NULL } /* just to mark the end of the array */\n"\
-             "};\n" >> config.h
+        echo -e "static const char delimiter[] = { ' ', '|', ' ', DELIMITERENDCHAR };\n"                                \
+                "\b#include \"block.h\"\n"                                                                              \
+                "\bstatic Block blocks[] = {\n"                                                                         \
+                "\b/*      pathu                           pathc                           interval        signal */\n" \
+                "\b        { PATH(\"volume\"),               PATH(\"volume-button\"),          1,              1},\n"   \
+                "\b        { PATH(\"memory\"),               PATH(\"memory-button\"),          5,              2},\n"   \
+                "\b        { PATH(\"cpu\"),                  PATH(\"cpu-button\"),             5,              3},\n"   \
+                "\b        { PATH(\"battery\"),              NULL,                          30,              4},\n"     \
+                "\b        { PATH(\"network\"),              PATH(\"network-button\"),        15,              5},\n"   \
+                "\b        { PATH(\"bluetooth\"),            PATH(\"bluetooth-button\"),      15,              6},\n"   \
+                "\b        { PATH(\"date\"),                 PATH(\"date-button\"),            5,              7},\n"   \
+                "\b        { PATH(\"powermenu_icon\"),       PATH(\"powermenu\"),              0,              8},\n"   \
+                "\b        { NULL } /* just to mark the end of the array */\n"                                          \
+                "\b};\n" >> config.h
         sudo make install
     else
         error "Error installing dwmblocks"
@@ -145,18 +145,18 @@ laptop() {
     # touchpad
     sudo usermod -a -G input "$USER"
     sudo touch /etc/X11/xorg.conf.d/30-touchpad.conf
-    echo "Section \"InputClass\"\n"\
-         "    Identifier \"devname\"\n"\
-         "    Driver \"libinput\"\n"\
-         "    Option \"Tapping\" \"on\"\n"\
-         "    Option \"NaturalScrolling\" \"true\"\n"\
-         "EndSection\n" |
+    echo -e "Section \"InputClass\"\n"                     \
+            "\b    Identifier \"devname\"\n"               \
+            "\b    Driver \"libinput\"\n"                  \
+            "\b    Option \"Tapping\" \"on\"\n"            \
+            "\b    Option \"NaturalScrolling\" \"true\"\n" \
+            "\bEndSection\n" |
     sudo tee /etc/X11/xorg.conf.d/30-touchpad.conf
     
     # acpi events
     sudo touch /etc/acpi/events/ac_adapter
-    echo "event=ac_adapter\n"\
-         "action=pkill -RTMIN+4 dwmblocks" |
+    echo -e "event=ac_adapter\n"\
+            "\baction=pkill -RTMIN+4 dwmblocks" |
     sudo tee /etc/acpi/events/ac_adapter
     
     # brightness and video group
@@ -178,8 +178,8 @@ services() {
     # acpi events
     sudo systemctl enable acpid.service
     sudo touch /etc/acpi/events/jack
-    echo "event=jack*\n"\
-         "action=pkill -RTMIN+1 dwmblocks" |
+    echo -e "event=jack*\n" \
+            "\baction=pkill -RTMIN+1 dwmblocks" |
     sudo tee /etc/acpi/events/jack
 
     # bluetooth
@@ -190,20 +190,20 @@ services() {
 
     # slock
     sudo touch /etc/systemd/system/slock@.service
-    echo "[Unit]\n"
-         "Description=Lock X session using slock for user %i\n"\
-         "Before=sleep.target\n"\
-         "Before=suspend.target\n"\
-         "\n"\
-         "[Service]\n"\
-         "User=%i\n"\
-         "Environment=DISPLAY=:0\n"\
-         "ExecStartPre=/usr/bin/xset dpms force suspend\n"\
-         "ExecStart=/usr/local/bin/slock\n"\
-         "\n"\
-         "[Install]\n"\
-         "WantedBy=sleep.target\n"\
-         "WantedBy=suspend.target\n" |
+    echo -e "[Unit]\n"                                               \
+            "\bDescription=Lock X session using slock for user %i\n" \
+            "\bBefore=sleep.target\n"                                \
+            "\bBefore=suspend.target\n"                              \
+            "\b\n"                                                   \
+            "\b[Service]\n"                                          \
+            "\bUser=%i\n"                                            \
+            "\bEnvironment=DISPLAY=:0\n"                             \
+            "\bExecStartPre=/usr/bin/xset dpms force suspend\n"      \
+            "\bExecStart=/usr/local/bin/slock\n"                     \
+            "\b\n"                                                   \
+            "\b[Install]\n"                                          \
+            "\bWantedBy=sleep.target\n"                              \
+            "\bWantedBy=suspend.target\n" |
     sudo tee /etc/systemd/system/slock@.service
     sudo systemctl enable slock@"$USER".service
 }
@@ -212,13 +212,13 @@ finishing_touches() {
     # dwm login session
     sudo mkdir -p /usr/share/xsessions
     sudo touch /usr/share/xsessions/dwm.desktop
-    echo "[Desktop Entry]\n"\
-         "Encoding=UTF-8\n"\
-         "Name=dwm\n"\
-         "Comment=Dynamic window manager\n"\
-         "Exec=startdwm\n"\
-         "Icon=dwm\n"\
-         "Type=XSession\n" |
+    echo -e "[Desktop Entry]\n"                  \
+            "\bEncoding=UTF-8\n"                 \
+            "\bName=dwm\n"                       \
+            "\bComment=Dynamic window manager\n" \
+            "\bExec=startdwm\n"                  \
+            "\bIcon=dwm\n"                       \
+            "\bType=XSession\n" |
     sudo tee /usr/share/xsessions/dwm.desktop
 
     # default shell
