@@ -227,6 +227,22 @@ finishing_touches() {
            "Type=XSession"                  |
     sudo tee /usr/share/xsessions/dwm.desktop
 
+    # default text editor
+    sudo mkdir -p ~/.local/share/applications
+    sudo touch ~/.local/share/applications/nvim.desktop
+    printf "%s\n"                           \
+           "[Desktop Entry]"                \
+           "Name=Neovim Text Editor"        \
+           "Comment=Edit text files"        \
+           "Exec=nvim"                      \
+           "Terminal=true"                  \
+           "Type=Application"               \
+           "Icon=terminal"                  \
+           "Categories=Utility;TextEditor;" \
+           "StartupNotify=true"             \
+           "MimeType=text/plain;"
+    xdg-mime default nvim.desktop text/plain
+
     # default shell
     sudo usermod -s /usr/bin/zsh "$USER"
 
