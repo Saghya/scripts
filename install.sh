@@ -40,7 +40,7 @@ packages() {
     fi
 
     AUR_PCKGS="breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly dashbinsh
-        networkmanager-dmenu-git kvantum-theme-arc"
+        networkmanager-dmenu-git dmenu-bluetooth kvantum-theme-arc"
     for PCKG in $AUR_PCKGS; do
         yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
     done
