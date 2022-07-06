@@ -19,12 +19,13 @@ setup() {
 
 ## PACKAGES ##
 packages() {
-    PCKGS="base-devel xorg-server xorg-xwininfo xorg-xinit xorg-xprop xorg-xrandr xorg-xdpyinfo xclip xdotool
-        xbindkeys xdg-utils man-db man-pages polkit acpid pipewire pipewire-pulse pavucontrol pamixer wget
-        udiskie alacritty noto-fonts noto-fonts-cjk noto-fonts-extra noto-fonts-emoji dunst feh dash zsh
-        zsh-autosuggestions zsh-syntax-highlighting maim vim neovim picom lxappearance gtk-engine-murrine
-        gnome-themes-extra arc-gtk-theme papirus-icon-theme kvantum qt5ct qt6ct ueberzug ranger pcmanfm
-        zathura zathura-pdf-mupdf mpv exa inetutils ripgrep fd clang pyright bluez bluez-utils ntfs-3g openssh"
+    PCKGS="base-devel clang gdb python ntfs-3g openssh xorg-server xorg-xwininfo xorg-xinit
+        xorg-xprop xorg-xrandr xorg-xdpyinfo xclip xdotool xbindkeys xdg-utils man-db man-pages
+        polkit acpid pipewire pipewire-pulse pavucontrol pamixer wget udiskie alacritty noto-fonts
+        noto-fonts-cjk noto-fonts-extra noto-fonts-emoji dunst feh dash zsh zsh-autosuggestions
+        zsh-syntax-highlighting maim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra
+        arc-gtk-theme papirus-icon-theme kvantum qt5ct qt6ct ueberzug ranger pcmanfm zathura
+        zathura-pdf-mupdf mpv exa inetutils ripgrep fd pyright bluez bluez-utils python-pygments"
     sudo pacman --noconfirm -Syyu
     for PCKG in $PCKGS; do
         sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
@@ -39,8 +40,8 @@ packages() {
         error "Error installing yay"
     fi
 
-    AUR_PCKGS="google-chrome breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim ly dashbinsh
-        networkmanager-dmenu-git dmenu-bluetooth kvantum-theme-arc"
+    AUR_PCKGS="google-chrome breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim
+        ly dashbinsh networkmanager-dmenu-git dmenu-bluetooth kvantum-theme-arc"
     for PCKG in $AUR_PCKGS; do
         yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
     done
@@ -239,6 +240,9 @@ finishing_touches() {
            "StartupNotify=true"             \
            "MimeType=text/plain;"
     xdg-mime default nvim.desktop text/plain
+
+    # default pdf viewer
+    xdg-mime default org.pwmt.zathura.desktop application/pdf
 
     # default shell
     sudo usermod -s /usr/bin/zsh "$USER"
