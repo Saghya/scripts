@@ -216,8 +216,8 @@ services() {
     printf "%s\n"        \
            "[main]"      \
            "dns=dnsmasq" |
-    sudo nmcli general reload
     sudo tee /etc/NetworkManager/conf.d/dns.conf
+    sudo nmcli general reload
     sudo touch /etc/NetworkManager/dnsmasq.d/dnsmasq.conf
     printf "%s\n"            \
            "cache-size=1000" \
