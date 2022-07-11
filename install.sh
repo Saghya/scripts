@@ -216,14 +216,16 @@ services() {
     printf "%s\n"        \
            "[main]"      \
            "dns=dnsmasq" |
+    sudo nmcli general reload
     sudo tee /etc/NetworkManager/conf.d/dns.conf
-    printf "%s\n"           \
-           "no-resolv"      \
-           "server=8.8.8.8" \
-           "server=8.8.4.4" |
-    sudo tee -a /etc/dnsmasq.conf
+    sudo touch /etc/NetworkManager/dnsmasq.d/dnsmasq.conf
+    printf "%s\n"            \
+           "cache-size=1000" \
+           "no-resolv"       \
+           "server=8.8.8.8"  \
+           "server=8.8.4.4"  |
+    sudo tee /etc/NetworkManager/dnsmasq.d/dnsmasq.conf
     sudo systemctl enable NetworkManager.service
-    sudo systemctl enable dnsmasq.service
 }
 
 finishing_touches() {
