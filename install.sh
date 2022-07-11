@@ -281,8 +281,8 @@ main() {
     git_packages
 
     # laptop specific packages and settings
-    chassis_type=$(read -r /sys/class/dmi/id/chassis_type)
-    if [ "$chassis_type" = 9 ] || [ "$chassis_type" = 10 ]; then
+    read -r CHASSIS_TYPE < /sys/class/dmi/id/chassis_type
+    if [ "$CHASSIS_TYPE" = 9 ] || [ "$CHASSIS_TYPE" = 10 ]; then
         laptop
     fi
 
