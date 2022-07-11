@@ -25,7 +25,8 @@ packages() {
         noto-fonts-cjk noto-fonts-extra noto-fonts-emoji dunst feh dash zsh zsh-autosuggestions
         zsh-syntax-highlighting maim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra
         arc-gtk-theme papirus-icon-theme kvantum qt5ct qt6ct ueberzug ranger pcmanfm zathura
-        zathura-pdf-mupdf mpv exa inetutils ripgrep fd pyright bluez bluez-utils python-pygments"
+        zathura-pdf-mupdf mpv exa inetutils ripgrep fd pyright bluez bluez-utils python-pygments
+        networkmanager dnsmasq"
     sudo pacman --noconfirm -Syyu
     for PCKG in $PCKGS; do
         sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
@@ -158,7 +159,7 @@ laptop() {
     
     # acpi events
     sudo touch /etc/acpi/events/ac_adapter
-    printf "%s\n"                            \ 
+    printf "%s\n"                            \
            "event=ac_adapter"                \
            "action=pkill -RTMIN+4 dwmblocks" |
     sudo tee /etc/acpi/events/ac_adapter
@@ -209,6 +210,20 @@ services() {
            "WantedBy=suspend.target"                            |
     sudo tee /etc/systemd/system/slock@.service
     sudo systemctl enable slock@"$USER".service
+
+    # network
+    sudo touch /etc/NetworkManager/conf.d/dns.conf
+    printf "%s\n"        \
+           "[main]"      \
+           "dns=dnsmasq" |
+    sudo tee /etc/NetworkManager/conf.d/dns.conf
+    printf "%s\n"           \
+           "no-resolv"      \
+           "server=8.8.8.8" \
+           "server=8.8.4.4" |
+    sudo tee -a /etc/dnsmasq.conf
+    sudo systemctl enable NetworkManager.service
+    sudo systemctl enable dnsmasq.service
 }
 
 finishing_touches() {
@@ -266,7 +281,8 @@ main() {
     git_packages
 
     # laptop specific packages and settings
-    if hostnamectl status | grep Chassis | cut -f2 -d ":" | tr -d ' ' | grep -q "laptop"; then
+    chassis_type=$(read -r /sys/class/dmi/id/chassis_type)
+    if [ "$chassis_type" = 9 ] || [ "$chassis_type" = 10 ]; then
         laptop
     fi
 
