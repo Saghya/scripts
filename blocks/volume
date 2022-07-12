@@ -1,6 +1,7 @@
 #!/bin/bash
 
 VOLUME=$(pamixer --get-volume)
+[ -z "$VOLUME" ] && exit
 
 if [ "$(pamixer --get-mute)" = true ]; then
     printf "\x0bﱝ"
