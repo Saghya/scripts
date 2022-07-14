@@ -23,10 +23,9 @@ packages() {
         xorg-xprop xorg-xrandr xorg-xdpyinfo xclip xdotool xbindkeys xdg-utils man-db man-pages
         polkit acpid pipewire pipewire-pulse pavucontrol pamixer wget udiskie alacritty noto-fonts
         noto-fonts-cjk noto-fonts-extra noto-fonts-emoji dunst feh dash zsh zsh-autosuggestions
-        zsh-syntax-highlighting maim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra
-        arc-gtk-theme papirus-icon-theme kvantum qt5ct qt6ct ueberzug ranger pcmanfm zathura
-        zathura-pdf-mupdf mpv exa inetutils ripgrep fd pyright bluez bluez-utils python-pygments
-        networkmanager dnsmasq"
+        maim neovim picom lxappearance gtk-engine-murrine gnome-themes-extra arc-gtk-theme
+        papirus-icon-theme kvantum qt5ct qt6ct ueberzug ranger pcmanfm zathura zathura-pdf-mupdf
+        mpv exa inetutils ripgrep fd pyright bluez bluez-utils python-pygments networkmanager dnsmasq"
     sudo pacman --noconfirm -Syyu
     for PCKG in $PCKGS; do
         sudo pacman --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
@@ -42,7 +41,7 @@ packages() {
     fi
 
     AUR_PCKGS="google-chrome breeze-snow-cursor-theme nerd-fonts-jetbrains-mono nerd-fonts-ubuntu-mono htop-vim
-        ly dashbinsh networkmanager-dmenu-git dmenu-bluetooth kvantum-theme-arc"
+        ly dashbinsh networkmanager-dmenu-git dmenu-bluetooth kvantum-theme-arc zsh-fast-syntax-highlighting"
     for PCKG in $AUR_PCKGS; do
         yay --needed --noconfirm -S "$PCKG" || error "Error installing $PCKG"
     done
