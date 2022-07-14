@@ -10,7 +10,7 @@ done
 
 OPTIONS="Cancel\n Shutdown\nﰇ Reboot\n Sleep\n Hibernate\n Lock"
 #X=$(xdpyinfo | grep dimensions | awk '{ print $2 }' | cut -d x -f 1)
-#X=$((X-230))
+#X=$((X-230)) hehe
 X=1690 # hard wired for 1080p for now
 Y=40
 SELECTED=$(echo -e "$OPTIONS" | dmenu -m "$m_flag" -l 6 -x "$X" -y "$Y" -z 200)
