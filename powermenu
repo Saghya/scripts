@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 m_flag=-1
 while getopts 'm:' flag; do
@@ -12,7 +12,7 @@ OPTIONS="Cancel\n Shutdown\nﰇ Reboot\n Sleep\n Hibernate\n Lock"
 X=$(current_monitor_res | awk -F'[x]' '{print $1}')
 X=$((X-230))
 Y=40
-SELECTED=$(echo -e "$OPTIONS" | dmenu -m "$m_flag" -l 6 -x "$X" -y "$Y" -z 200)
+SELECTED=$(echo "$OPTIONS" | dmenu -m "$m_flag" -l 6 -x "$X" -y "$Y" -z 200)
 
 case $SELECTED in
     " Shutdown") systemctl poweroff ;;
