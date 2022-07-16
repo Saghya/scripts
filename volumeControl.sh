@@ -1,6 +1,7 @@
 #!/bin/bash
 
 VOLUME=$(pamixer --get-volume)
+[ "$VOLUME" -gt 100 ] && pactl set-sink-volume 0 100%
 
 function send_notification() {
     dash=$(seq -s "─" 0 $((VOLUME / 5)) | sed 's/[0-9]//g')
