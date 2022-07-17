@@ -50,14 +50,14 @@ packages() {
 ## GIT PACKAGES ##
 git_packages() {
     # dotfiles
-    if git clone --bare https://github.com/Saghya/dotfiles ~/.local/dotfiles; then
+    if git clone --bare https://github.com/saghya/dotfiles ~/.local/dotfiles; then
         /usr/bin/git --git-dir="$HOME"/.local/dotfiles/ --work-tree="$HOME" checkout
     else
         error "Error installing dotfiles"
     fi
 
     # dwm
-    if git clone https://github.com/Saghya/dwm ~/.local/src/dwm; then
+    if git clone https://github.com/saghya/dwm ~/.local/src/dwm; then
         cd ~/.local/src/dwm &&
         make
         sudo make install
@@ -94,7 +94,7 @@ git_packages() {
     fi
 
     # dmenu
-    if git clone https://github.com/Saghya/dmenu ~/.local/src/dmenu; then
+    if git clone https://github.com/saghya/dmenu ~/.local/src/dmenu; then
         cd ~/.local/src/dmenu &&
         make
         sudo make install
